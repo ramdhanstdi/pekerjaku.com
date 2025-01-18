@@ -67,6 +67,7 @@
                                       <option value="3">Pekerja</option>
                                       <option value="2">Majikan</option>
                                     </select>
+                                    jdakfjlkjfalsdiue kjdfa kkjiefead kjhjharin ini menjadi jadi karena itidak bisa menjadi ajdif seihinggls hari inidfal 
                                   </div>
                                   <div class="mb-3">
                                     <label for="image" class="form-label">Image</label>
@@ -77,6 +78,23 @@
                                     <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+               <!-- Detail Modal -->
+            <div class="modal fade" id="detailUserModal" tabindex="-1" aria-labelledby="detailUserModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailUserModalLabel">User Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="userDetails">
+                                <!-- User details will be dynamically loaded here -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -158,36 +176,73 @@
                     },
                 });
             });
-            function viewDetail(userId) {
-                    window.location.href = `/user/detail/${userId}`;
-                }
-            });
+        });
 
-            function deleteUser(userId) {
-                if (confirm('Are you sure you want to delete this user?')) {
-                    let token = localStorage.getItem('auth_token'); // Retrieve the stored token
+        function viewDetail(userId) {
+            let token = localStorage.getItem('auth_token'); // Retrieve the stored token
+                $.ajax({
+                    url: `/api/admin/user/getOne?id=${userId}`, // API endpoint to fetch user details
+                    type: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Include token
+                    },
+                    success: function (response) {
+                        if (response.status) {
+                            let user = response.data;
 
-                    $.ajax({
-                        url: `/api/user/delete/${userId}`,
-                        type: 'DELETE',
-                        headers: {
-                            'Authorization': `Bearer ${token}`, // Include token
-                        },
-                        success: function (response) {
-                            if (response.status) {
-                                alert(response.message);
-                                location.reload(); // Reload the page to update the table
-                            } else {
-                                alert('Error: ' + response.message);
-                            }
-                        },
-                        error: function (xhr) {
-                            console.error(xhr.responseText);
-                            alert('An error occurred. Please try again.');
+                            // Populate modal content with user details
+                            $('#userDetails').html(`
+                                <img src="${user.image ? '/storage/' + user.image : '/default-avatar.png'}" alt="User Image" width="50">
+                                <p class='m-1' ><strong>Nama:</strong> ${user.first_name} ${user.last_name}</p>
+                                <p class='m-1' ><strong>Email:</strong> ${user.email}</p>
+                                <p class='m-1' ><strong>Alamat:</strong> ${user.address}</p>
+                                <p class='m-1' ><strong>Kecamatan:</strong> ${user.district}</p>
+                                <p class='m-1' ><strong>Kabupaten/Kota:</strong> ${user.regency_city}</p>
+                                <p class='m-1' ><strong>Province:</strong> ${user.province}</p>
+                                <p class='m-1' ><strong>No Telepon:</strong> ${user.phone_number}</p>
+                                <p class='m-1' ><strong>Nomor Whatsapp:</strong> ${user.number_whatsapp}</p>
+                                <p class='m-1' ><strong>Role:</strong> ${user.level_user === 3 ? 'Pekerja' : 'Majikan'}</p>
+                            `);
+
+                            // Show the modal
+                            $('#detailUserModal').modal('show');
+                        } else {
+                            alert('Error: ' + response.message);
                         }
-                    });
-                }
+                    },
+                    error: function (xhr) {
+                        console.error(xhr.responseText);
+                        alert('An error occurred. Please try again.');
+                    }
+                });
             }
+
+        function deleteUser(userId) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                let token = localStorage.getItem('auth_token'); // Retrieve the stored token
+
+                $.ajax({
+                    url: `/api/user/delete/${userId}`,
+                    type: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Include token
+                    },
+                    success: function (response) {
+                        if (response.status) {
+                            alert(response.message);
+                            location.reload(); // Reload the page to update the table
+                        } else {
+                            alert('Error: ' + response.message);
+                        }
+                    },
+                    error: function (xhr) {
+                        console.error(xhr.responseText);
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            }
+        }
+
     </script>
     
 @endsection

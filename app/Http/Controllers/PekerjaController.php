@@ -27,7 +27,9 @@ class PekerjaController extends Controller
     public function index(){
         $pekerja = $this->pekerjaService->getAlls()->where('user.level_user', 3);
         $kategori = $this->kategoriService->getAlls();
-        return view('landingpage.pekerja', compact('kategori', 'pekerja'));
+        $view1 = view('landingpage.pekerja', compact('kategori', 'pekerja')) -> render();
+        $view2 = view('admin.pekerja.index', compact('pekerja')) -> render();
+        return $view1 . $view2 ;
     }
 
     public function dashboard(){
@@ -35,7 +37,8 @@ class PekerjaController extends Controller
     }
 
     public function lowongan(){
-        return view('pekerja.lowongan');
+        $kategori = $this->kategoriService->getAlls(); // Fetch kategori data
+        return view('pekerja.lowongan', compact('kategori'));
     }
 
     public function dataDiri(){

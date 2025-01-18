@@ -10,13 +10,11 @@
                         <i class="fa fa-bars"></i>
                         <span>All Pekerja</span>
                     </div>
-                    <ul>
-                        <li><a href="#">ART</a></li>
-                        <li><a href="#">Penjaga Anak</a></li>
-                        <li><a href="#">Penjaga Lansia</a></li>
-                        <li><a href="#">Perawat Kebun</a></li>
-                        <li><a href="#">Supir Pribadi</a></li>
-                    </ul>
+                    @foreach ($kategori as $item)
+                        <ul>
+                            <li><a href="#">{{ $item->name }}</a></li>
+                        </ul>
+                    @endforeach
                 </div>
             </div>
             <div class="col-lg-9">
@@ -103,12 +101,9 @@
                 </div>
                 <div class="featured__controls">
                     <ul>
-                        <li class="active" data-filter="*">All</li>
-                        <li data-filter=".oranges">ART</li>
-                        <li data-filter=".fresh-meat">Penjaga Anak</li>
-                        <li data-filter=".vegetables">Penjaga Lansia</li>
-                        <li data-filter=".fastfood">Perawat Kebun</li>
-                        <li data-filter=".fastfoods">Supir Pribadi</li>
+                        @foreach ($kategori as $item)
+                            <li data-filter={{$item->name}}>{{ $item->name }}</li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

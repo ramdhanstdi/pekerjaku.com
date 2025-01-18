@@ -446,8 +446,13 @@
             success: function(response) {
                 if (response.status) {
                     localStorage.setItem('auth_token', response.access_token);
+                    localStorage.setItem('user', response.data);
                     if(response.data.level_user == 1)
-                    window.location.href = '/admin/dasboard';
+                    window.location.href = '/admin/dashboard';
+                    if(response.data.level_user == 2)
+                    window.location.href = '/majikan/dashboard';
+                    if(response.data.level_user == 3)
+                    window.location.href = '/pekerja/dashboard';
                     else
                     window.location.href = '/';
                 } else {
