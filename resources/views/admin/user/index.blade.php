@@ -67,7 +67,6 @@
                                       <option value="3">Pekerja</option>
                                       <option value="2">Majikan</option>
                                     </select>
-                                    jdakfjlkjfalsdiue kjdfa kkjiefead kjhjharin ini menjadi jadi karena itidak bisa menjadi ajdif seihinggls hari inidfal 
                                   </div>
                                   <div class="mb-3">
                                     <label for="image" class="form-label">Image</label>
