@@ -84,11 +84,11 @@
                               <select id="kategori_id" name="kategori_id" required>
                                 <option value="" disabled selected>Pilih Pekerjaan</option>
                                 @foreach ($kategori as $item)
-                                  <option value={{$item->value}} data-filter={{$item->name}}>{{ $item->name }}</option>
+                                  <option value={{$item->id}} data-filter={{$item->name}}>{{ $item->name }}</option>
                                 @endforeach
                               </select>
                             </div>
-                            <label for="kategori_id" class="form-label">&nbsp;</label>
+                            <label class="form-label">&nbsp;</label>
                             <div class="mb-3">
                                 <label for="salary" class="form-label">Gaji yang diharapkan</label>
                                 <input type="text" class="form-control" id="salary" name="salary" rows="3" required></input>

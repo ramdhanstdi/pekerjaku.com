@@ -32,50 +32,54 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function loginPost(){
-        $rules= [
-            'email' => 'required',
+    public function loginPost(Request $request) {
+        $rules = [
+            'email' => 'required|email',
             'password' => 'required'
-          ];
-      
-          $messages= [
-              'email.required' => 'Please enter a email.',
-              'password.required' => 'Please enter a password.'
-          ];
-
-          $validator = Validator::make($this->request->all(),$rules,$messages);
-          if($validator->fails())
-          {
-              $messages=$validator->messages();
-              $errors=$messages->all();
-      
-              return response()->json([
-                  'status' => false,
-                  'message' => $errors
-              ]);
-          }
-      
-          $data = [
-              'email' => $this->request->email,
-              'password' => $this->request->password
-          ];
-          
-          try {
-              if (auth()->attempt($data)) {
-                  $user = auth()->user();
-                  $token = $user->createToken('token-api')->plainTextToken;
-                  
-                return redirect()->route('/');
-              } else {
-                return redirect()->back();
-              }
-          } catch (\Exception $e) {
-              return response()->json([
-                  'status' => false,
-                  'message' => $e->getMessage()
-              ]);
-          }
+        ];
+    
+        $messages = [
+            'email.required' => 'Please enter an email.',
+            'email.email' => 'Please enter a valid email address.',
+            'password.required' => 'Please enter a password.'
+        ];
+    
+        $validator = Validator::make($request->all(), $rules, $messages);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => $validator->errors()->all()
+            ]);
+        }
+    
+        $credentials = $request->only('email', 'password');
+    
+        try {
+            if (auth()->attempt($credentials)) {
+                $request->session()->regenerate();
+                $user = auth()->user();
+                $token = $user->createToken('token-api')->plainTextToken;
+    
+                return response()->json([
+                    'status' => true,
+                    'data' => $user,
+                    'access_token' => $token
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid email or password.'
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
+    
 
     public function registerPage(){
         return view('auth.registrasi');

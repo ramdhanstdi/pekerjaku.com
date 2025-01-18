@@ -453,8 +453,6 @@
                     window.location.href = '/majikan/dashboard';
                     if(response.data.level_user == 3)
                     window.location.href = '/pekerja/dashboard';
-                    else
-                    window.location.href = '/';
                 } else {
                     console.log('error',response)
                     showAlert(response?.message, 'warning');

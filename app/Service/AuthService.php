@@ -49,6 +49,7 @@ class AuthService {
 
     try {
         if (auth()->attempt($data)) {
+            $this->request->session()->regenerate();
             $user = auth()->user();
             $token = $user->createToken('token-api')->plainTextToken;
             return response()->json([
