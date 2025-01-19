@@ -5,7 +5,7 @@
       <div class="container">
         <h1>Dashboard</h1>
         <div class="d-flex justify-content-center mt-3 p-2 ">
-          <a href="{{ url('/') }}" class="btn btn-secondary" >Kembali Ke Halaman Utama</div>
+          <a href="{{ url('/') }}" class="btn btn-secondary" >Kembali Ke Halaman Utama</a>
         </div>
       </div>
     </section>

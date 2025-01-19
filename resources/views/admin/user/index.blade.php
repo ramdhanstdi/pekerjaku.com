@@ -6,14 +6,14 @@
         <h1>Data User</h1>
 
         <div class="p-2">
-            <button class="btn btn-md btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">ADD PEKERJA</button>
+            <button class="btn btn-md btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">ADD USER</button>
 
              <!-- Modal Structure -->
              <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="addUserModalLabel">Add New Pekerja</h5>
+                            <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div  class="modal-body">
