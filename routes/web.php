@@ -30,7 +30,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'index'])->name('/');
 
-Route::middleware(['web'])->prefix('pekerja')->group(function () {
+Route::middleware(['auth.login'])->prefix('pekerja')->group(function () {
     Route::get('dashboard', [PekerjaController::class, 'dashboard'])->name('pekerja.dashboard');
     Route::get('data_diri', [PekerjaController::class, 'dataDiri'])->name('pekerja.data_diri');
     Route::get('lowongan', [PekerjaController::class, 'lowongan'])->name('pekerja.lowongan');
@@ -39,14 +39,14 @@ Route::middleware(['web'])->prefix('pekerja')->group(function () {
 Route::get('lowongan', [LowonganController::class, 'index'])->name('lowongan');
 Route::post('lowongan/save', [LowonganController::class, 'save'])->name('lowongan.save');
 
-Route::middleware(['web'])->prefix('majikan')->group(function () {
+Route::middleware(['auth.login'])->prefix('majikan')->group(function () {
     Route::get('dashboard', [MajikanController::class, 'index'])->name('majikan.dashboard');
     Route::get('data-pekerja', [MajikanController::class, 'dataPekerja'])->name('majikan.data_pekerja');
     Route::get('data-diri', [MajikanController::class, 'dataDiri'])->name('majikan.data_diri');
     Route::get('data-order', [MajikanController::class, 'dataOrder'])->name('majikan.order');
 });
 
-Route::middleware(['web'])->prefix('admin')->group(function(){
+Route::middleware(['auth.login'])->prefix('admin')->group(function(){
     Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('pekerja', [AdminController::class, 'pekerja'])->name('admin.pekerja');
     Route::get('user', [AdminController::class, 'user'])->name('admin.user');

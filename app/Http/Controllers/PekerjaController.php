@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pekerja;
 use App\Service\KategoriService;
 use App\Service\PekerjaService;
 use App\Service\UserService;
@@ -42,8 +43,10 @@ class PekerjaController extends Controller
     }
 
     public function dataDiri(){
+        $userId = auth()->id(); // Get the authenticated user's ID
+        $dataDiri = Pekerja::where('user_id', $userId)->first(); // Fetch the user's data
         $kategori = $this->kategoriService->getAlls(); // Fetch kategori data
-        return view('pekerja.data_diri', compact('kategori'));
+        return view('pekerja.data_diri', compact('kategori', 'dataDiri'));
     }
 
     public function detailPekerja($id){

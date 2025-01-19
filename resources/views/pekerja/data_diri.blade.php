@@ -13,7 +13,7 @@
               <div class="row">
                 <div class="col">
                   <label for="description" class="form-label">Deskripsi Diri</label>
-                  <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                  <textarea class="form-control" id="description" name="description " rows="3" required>{{ $dataDiri->description ?? '' }}</textarea>
                 </div>
               </div>
               <div class="row">
@@ -21,9 +21,9 @@
                   <label for="kategori_id" class="form-label">Pekerjaan yang diminati</label>
                   <div class="mb-3 d-flex-col">
                     <select id="kategori_id" name="kategori_id" required>
-                      <option value="" disabled selected>Pilih Pekerjaan</option>
+                      <option {{ empty($dataDiri->kategori_id) ? 'selected' : '' }} value="" disabled selected>Pilih Pekerjaan</option>
                       @foreach ($kategori as $item)
-                      <option value={{$item->id}} data-filter={{$item->name}}>{{ $item->name }}</option>
+                      <option {{ $dataDiri->kategori_id == $item->id ? 'selected' : '' }} value={{$item->id}} data-filter={{$item->name}}>{{ $item->name }}</option>
                       @endforeach
                     </select>
                   </div>
@@ -31,105 +31,103 @@
                 <label class="form-label">&nbsp;</label>
                 <div class="col">
                   <label for="experience">Pengalaman</label>
-                  <input type="text" class="form-control" name="experience" id="experience">
+                  <input type="text" class="form-control" name="experience" id="experience" value="{{ $dataDiri->experience ?? '' }}">
                 </div>
               </div>
               <div class="row">
                 <div class="col">
                   <label for="age">Umur</label>
-                  <input type="text" class="form-control" name="age" id="age">
+                  <input type="text" class="form-control" name="age" id="age" value="{{ $dataDiri->age ?? '' }}">
                 </div>
                 <div class="col">
                   <label for="education">Pendidikan Terakhir</label>
-                  <input type="text" class="form-control" name="education" id="education">
+                  <input type="text" class="form-control" name="education" id="education" value="{{ $dataDiri->education ?? '' }}">
                 </div>
               </div>
               <div class="row">
                 <div class="col">
                   <label for="tall">Tinggi Badan(cm)</label>
-                  <input type="text" class="form-control" name="tall" id="tall">
+                  <input type="text" class="form-control" name="tall" id="tall" value="{{ $dataDiri->tall ?? '' }}">
                 </div>
                 <div class="col">
                   <label for="heavy">Berat Badan(kg)</label>
-                  <input type="text" class="form-control" name="heavy" id="heavy">
+                  <input type="text" class="form-control" name="heavy" id="heavy" value="{{ $dataDiri->heavy ?? '' }}">
                 </div>
               </div>
               <div class="row">
                 <div class="col">
                   <label for="tribe_of_origin">Suku</label>
-                  <input type="text" class="form-control" name="tribe_of_origin" id="tribe_of_origin">
+                  <input type="text" class="form-control" name="tribe_of_origin" id="tribe_of_origin" value="{{ $dataDiri->tribe_of_origin ?? '' }}">
                 </div>
                 <div class="col">
                   <label for="religion">Agama</label>
-                  <input type="text" class="form-control" name="religion" id="religion">
+                  <input type="text" class="form-control" name="religion" id="religion" value="{{ $dataDiri->religion ?? '' }}">
                 </div>
               </div>
               <div class="row">
                 <div class="col">
                   <label for="police_letter">SKCK</label>
-                  <input type="file" class="form-control" name="police_letter" id="police_letter">
+                  <input type="file" class="form-control" name="police_letter" id="police_letter" >
                 </div>
                 <div class="col">
                   <label for="doctors_letter">Keterangan Sehat</label>
-                  <input type="file" class="form-control" name="doctors_letter" id="doctors_letter">
+                  <input type="file" class="form-control" name="doctors_letter" id="doctors_letter" >
                 </div>
               </div>
               <div class="row">
                 <div class="col">
                   <label for="marital_status">Status Kawin</label>
-                  <input type="text" class="form-control" name="marital_status" id="marital_status">
+                  <input type="text" class="form-control" name="marital_status" id="marital_status" value="{{ $dataDiri->marital_status ?? '' }}">
                 </div>
                 <div class="col">
                   <label for="have_children">Jumlah Anak</label>
-                  <input type="text" class="form-control" name="have_children" id="have_children">
+                  <input type="text" class="form-control" name="have_children" id="have_children" value="{{ $dataDiri->have_children ?? '' }}">
                 </div>
               </div>
               <div class="row">
                 <div class="col">
                   <label for="stay_at">Bisa Menginap</label>
-                  <input type="text" class="form-control" name="stay_at" id="stay_at">
+                  <input type="text" class="form-control" name="stay_at" id="stay_at" value="{{ $dataDiri->stay_at ?? '' }}">
                 </div>
                 <div class="col">
                   <label for="willing_to_work_in">Bersedia Berkerja di</label>
-                  <input type="text" class="form-control" name="willing_to_work_in" id="willing_to_work_in">
+                  <input type="text" class="form-control" name="willing_to_work_in" id="willing_to_work_in" value="{{ $dataDiri->willing_to_work_in ?? '' }}">
                 </div>
               </div>
               <div class="row">
                 <div class="col">
                   <label for="fear_of_dogs">Takut anjing</label>
-                  <input type="text" class="form-control" name="fear_of_dogs" id="fear_of_dogs">
+                  <input type="text" class="form-control" name="fear_of_dogs" id="fear_of_dogs" value="{{ $dataDiri->fear_of_dogs ?? '' }}">
                 </div>
                 <div class="col">
                   <label for="current_location">Lokasi Saat ini</label>
-                  <input type="text" class="form-control" name="current_location" id="current_location">
+                  <input type="text" class="form-control" name="current_location" id="current_location" value="{{ $dataDiri->current_location ?? '' }}">
                 </div>
               </div>
               <div class="row">
                 <div class="col">
                   <label for="english">Bahasa Inggris</label>
-                  <input type="text" class="form-control" name="english" id="english">
+                  <input type="text" class="form-control" name="english" id="english" value="{{ $dataDiri->english ?? '' }}">
                 </div>
                 <div class="col">
                   <label for="skills">Skill (Kemampuan)</label>
-                  <input type="text" class="form-control" name="skills" id="skills">
+                  <input type="text" class="form-control" name="skills" id="skills" value="{{ $dataDiri->skills ?? '' }}">
                 </div>
               </div>
               <div class="row">
                 <div class="col">
                   <label for="admin_fees">Biaya Admin</label>
-                  <input type="text" class="form-control" name="admin_fees" id="admin_fees">
+                  <input type="text" class="form-control" name="admin_fees" id="admin_fees" value="{{ $dataDiri->admin_fees ?? '' }}">
                 </div>
                 <div class="col">
                   <label for="salary">Gaji</label>
-                  <input type="text" class="form-control" name="salary" id="salary">
+                  <input type="text" class="form-control" name="salary" id="salary" value="{{ $dataDiri->salary ?? '' }}">
                 </div>
               </div>
               <div class="row">
                 <div class="col">
-                  <label for="warranty_period">Siap Bekerja dalam (hari)</label>
-                  <input type="text" class="form-control" name="warranty_period" id="warranty_period">
-                </div>
-                <div class="col">
+                  <label for="warranty_period">Garansi (hari)</label>
+                  <input type="text" class="form-control" name="warranty_period" id="warranty_period" value="{{ $dataDiri->warranty_period ?? '' }}">
                 </div>
               </div>
               <div class="pt-2">
@@ -152,7 +150,6 @@
                 const token = $('meta[name="csrf-token"]').attr('content'); // CSRF token
                 const userId = JSON.parse(localStorage.getItem('user'));                
                 formData.append('user_id', userId.id);
-                
 
                 $.ajax({
                     url: '/api/admin/pekerja/save', // API endpoint to handle the form

@@ -65,6 +65,7 @@ class PekerjaService {
 
   public function save(){
     $params = $this->request->only([
+      'id',
       'user_id',
       'kategori_id',
       'age',
@@ -90,11 +91,12 @@ class PekerjaService {
       'skills',
       'willing_to_work_in',
       'employee_status',
-      'skill'
+      'skill',
+      'description'
     ]);
 
-    $this->pekerjaRepository->save($params);
     try {
+      $this->pekerjaRepository->save($params);
       return response()->json([
         'status' => true,
         'message' => 'Data berhasil di tambahkan'

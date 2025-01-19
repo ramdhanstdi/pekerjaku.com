@@ -24,8 +24,8 @@ class PekerjaRepository {
   }
 
   public function save($params){ 
-    if (!empty($params['id'])) {
-      $user  = $this->model->where('id', $params['id'])->update($params);
+    if (!empty($params['user_id'])) {
+      $user  = $this->model->where('user_id', $params['user_id'])->update($params);
     } else {
       $user = $this->model->create($params);
     }

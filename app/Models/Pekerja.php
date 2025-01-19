@@ -36,7 +36,8 @@ class Pekerja extends Model
         'skills',
         'willing_to_work_in',
         'employee_status',
-        'skill'
+        'skill',
+        'description'
     ];
 
     public function user(){
