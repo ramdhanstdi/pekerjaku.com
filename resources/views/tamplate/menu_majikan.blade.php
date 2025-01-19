@@ -76,10 +76,9 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="header__top__right">
                         <div class="header__top__right__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                            @if (!empty(auth()->user()->id))
+                                <a href="{{ route('/') }}" style="cursor: pointer">Pergi ke depan</a>
+                            @endif
                         </div>
                         {{-- <div class="header__top__right__language">
                             <img src="img/language.png" alt="">

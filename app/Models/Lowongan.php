@@ -32,4 +32,9 @@ class Lowongan extends Model
     public function category(){
         return $this->belongsTo('App\Models\Kategori','kategori_id');
     }
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'kategori_id', 'id');
+    }
 }

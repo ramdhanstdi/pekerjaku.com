@@ -42,24 +42,48 @@
                     </div>
                 </div>
 
-                <div class="py-2">
+                <div class="py-2 overflow-auto">
                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Nama</th>
-                                <th>Image</th>
-                                <th>Deskripsi</th>
+                                <th>Posisi</th>
+                                <th>Nama Lengkap</th>
+                                <th>No telepon</th>
+                                <th>Alamat</th>
+                                <th>Kecamatan</th>
+                                <th>Kabupaten / Kota</th>
+                                <th>Provinsi</th>
+                                <th>Status</th>
+                                <th>Umur</th>
+                                <th>Pengalaman (Tahun)</th>
+                                <th>Jumlah Anak</th>
+                                <th>Gaji yang diharapkan</th>
+                                <th>Gaji Minimal</th>
+                                <th>Bersedia bekerja</th>
+                                <th>Jam bisa dihubungi</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($lowongan as $item)
                                 <tr>
-                                    <td>{{ $item->name }}</td>
-                                    <td><img src="{{ asset('storage/' . $item->image) }}" alt="Lowongan Image" width="50"></td>
-                                    <td>{{ $item->description }}</td>
+                                    <td>{{ $item->kategori->name }}</td>
+                                    <td>{{ $item->name_lengkap }}</td>
+                                    <td>{{ $item->no_telepon }}</td>
+                                    <td>{{ $item->address }}</td>
+                                    <td>{{ $item->kecamatan }}</td>
+                                    <td>{{ $item->kabupaten }}</td>
+                                    <td>{{ $item->provinsi }}</td>
+                                    <td>{{ $item->status }}</td>
+                                    <td>{{ $item->umur }}</td>
+                                    <td>{{ $item->pengalaman }}</td>
+                                    <td>{{ $item->punya_anak }}</td>
+                                    <td>Rp.{{ number_format($item->salary, 0, ',','.') }}</td>
+                                    <td>Rp.{{ number_format($item->salary_min, 0, ',','.') }}</td>
+                                    <td>{{ $item->bersedia_bekerja }}</td>
+                                    <td>{{ $item->jam_berapa_bisa_dihubungi }}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-info">Detail</button>
+                                        <button class="btn btn-sm btn-info mb-1">Detail</button>
                                         <button class="btn btn-sm btn-danger">Delete</button>
                                     </td>
                                 </tr>

@@ -121,43 +121,43 @@
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('./js/jquery-3.3.1.min.js') }}"></script>
-<script>
-    $(document).ready(function () {
-        $('#formLamaran').on('submit', function (e) {
-            e.preventDefault(); // Prevent default form submission
+    <script src="{{ asset('./js/jquery-3.3.1.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#formLamaran').on('submit', function (e) {
+                e.preventDefault(); // Prevent default form submission
 
-            const formData = new FormData(this); // Capture form data
-            const token = $('meta[name="csrf-token"]').attr('content'); // CSRF token
-            const userId = localStorage.getItem('user');
-            formData.append('user_id', userId);
-            
+                const formData = new FormData(this); // Capture form data
+                const token = $('meta[name="csrf-token"]').attr('content'); // CSRF token
+                const userId = JSON.parse(localStorage.getItem('user'));
+                formData.append('user_id', userId.id);
+                
 
-            $.ajax({
-                url: '/lowongan/save', // API endpoint to handle the form
-                method: 'POST',     // HTTP method
-                data: formData,     // Form data
-                processData: false, // Prevent jQuery from processing the data
-                contentType: false, // Prevent jQuery from setting content type
-                headers: {
-                    'X-CSRF-TOKEN': token, // Include CSRF token in the headers
-                },
-                success: function (response) {
-                    if (response.status) {
-                        alert('Lamaran berhasil dikirim!'); // Success message
-                        $('#formulirLamaranModal').modal('hide'); // Hide the modal
-                        $('#formLamaran')[0].reset(); // Reset the form
-                    } else {
-                        alert('Error: ' + response.message); // Error message from server
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText); // Log error for debugging
-                    alert('An error occurred. Please try again.');
-                },
+                $.ajax({
+                    url: '/lowongan/save', // API endpoint to handle the form
+                    method: 'POST',     // HTTP method
+                    data: formData,     // Form data
+                    processData: false, // Prevent jQuery from processing the data
+                    contentType: false, // Prevent jQuery from setting content type
+                    headers: {
+                        'X-CSRF-TOKEN': token, // Include CSRF token in the headers
+                    },
+                    success: function (response) {
+                        if (response.status) {
+                            alert('Lamaran berhasil dikirim!'); // Success message
+                            $('#formulirLamaranModal').modal('hide'); // Hide the modal
+                            $('#formLamaran')[0].reset(); // Reset the form
+                        } else {
+                            alert('Error: ' + response.message); // Error message from server
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText); // Log error for debugging
+                        alert('An error occurred. Please try again.');
+                    },
+                });
             });
         });
-    });
-  </script>
+    </script>
 
 @endsection

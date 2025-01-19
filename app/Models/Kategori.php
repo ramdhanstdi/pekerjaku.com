@@ -15,4 +15,9 @@ class Kategori extends Model
       'image',
       'description'
     ];
+
+    public function lowongans()
+    {
+        return $this->hasMany(Lowongan::class, 'kategori_id', 'id');
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lowongan;
 use App\Service\KategoriService;
 use App\Service\LowonganService;
 use Illuminate\Http\Request;
@@ -22,9 +23,10 @@ class LowonganController extends Controller
     }
 
     public function index(){
+        $lowongan = Lowongan::with('kategori')->get();
         $kategori = $this->kategoriService->getAlls();
-        $view1 = view('landingpage.lowongan')->render();
-        $view2 = view('admin.lowongan.index')->render();
+        $view1 = view('landingpage.lowongan', compact('lowongan'))->render();
+        $view2 = view('admin.lowongan.index', compact('lowongan'))->render();
         $view3 = view('pekerja.lowongan', compact('kategori')) -> render();
         return $view1 . $view2 . $view3;
     }

@@ -42,7 +42,8 @@ class PekerjaController extends Controller
     }
 
     public function dataDiri(){
-        return view('pekerja.data_diri');
+        $kategori = $this->kategoriService->getAlls(); // Fetch kategori data
+        return view('pekerja.data_diri', compact('kategori'));
     }
 
     public function detailPekerja($id){

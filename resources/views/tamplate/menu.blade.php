@@ -76,7 +76,7 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="header__top__left">
                         <ul>
-                            <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                            <li><i class="fa fa-envelope"></i>{{auth()->user()->email}}</li>
                             <li>Pekerjaku Portal Pencari Kerja No 1</li>
                         </ul>
                     </div>
@@ -84,10 +84,13 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="header__top__right">
                         <div class="header__top__right__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                            @if (auth()->user()->level_user == 1)
+                            <a href="{{ route('admin.dashboard') }}" style="cursor: pointer">Pergi ke Dashboard</a>
+                        @elseif (auth()->user()->level_user == 2)
+                            <a href="{{ route('majikan.dashboard') }}" style="cursor: pointer">Pergi ke Dashboard</a>
+                        @elseif (auth()->user()->level_user == 3)
+                            <a href="{{ route('pekerja.dashboard') }}" style="cursor: pointer">Pergi ke Dashboard</a>
+                        @endif                        
                         </div>
                         {{-- <div class="header__top__right__language">
                             <img src="img/language.png" alt="">

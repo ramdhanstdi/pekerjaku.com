@@ -32,7 +32,7 @@ Route::get('/', [HomeController::class, 'index'])->name('/');
 
 Route::middleware(['web'])->prefix('pekerja')->group(function () {
     Route::get('dashboard', [PekerjaController::class, 'dashboard'])->name('pekerja.dashboard');
-    Route::get('data-diri', [PekerjaController::class, 'dataDiri'])->name('pekerja.data_diri');
+    Route::get('data_diri', [PekerjaController::class, 'dataDiri'])->name('pekerja.data_diri');
     Route::get('lowongan', [PekerjaController::class, 'lowongan'])->name('pekerja.lowongan');
 });
 
