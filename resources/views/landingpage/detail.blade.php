@@ -110,11 +110,15 @@
                           </div>
                       </div>
                   </div> --}}
-                  @if (!empty(auth()->user()->first_name))
-                  <a href="https://wa.me/62895334930931?text={{ urlencode('Saya ingin memesan pekerja dengan nama ' . $data->user->first_name . ' ' . $data->user->last_name . ' dengan id ' . $data->user->id) }}" class="primary-btn">Pesan Sekarang</a>
-                  @else
-                  <a href="/login" class="primary-btn">Pesan Sekarang</a>
-                  @endif
+                    @if (!empty(auth()->user()->level_user == 2))
+                        <form action="{{ route('place.order', $data->user->id) }}" method="POST" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="primary-btn">Pesan Sekarang</button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="primary-btn">Login to Order</a>
+                    @endif
+              
                   {{-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> --}}
                   <ul>
                       <li><b>Pendidikan</b> <span>{{ $data->education }}</span></li>

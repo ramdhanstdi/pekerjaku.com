@@ -63,6 +63,21 @@ class PekerjaService {
     }
   }
 
+  public function getOneByUserId($pekerjaId){
+    $data = $this->pekerjaRepository->getOneByUserId($pekerjaId);
+    try {
+      return response()->json([
+        'status' => true,
+        'data' => $data
+      ]);
+    } catch (\Exception $e) {
+      return response()->json([
+        'status' => false,
+        'message' => $e->getMessage()
+      ]);
+    }
+  }
+
   public function save(){
     $params = $this->request->only([
       'id',

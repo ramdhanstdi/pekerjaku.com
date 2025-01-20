@@ -10,6 +10,7 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'user_id',
         'pekerja_id',
         'full_name',
@@ -19,4 +20,14 @@ class Order extends Model
         'status',
         'note',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function pekerja()
+    {
+        return $this->belongsTo(Pekerja::class);
+    }
 }

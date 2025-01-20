@@ -23,6 +23,10 @@ class PekerjaRepository {
     return $this->model->with(['user','kategori'])->where('id', $id)->first();
   }
 
+  public function getOneByUserId($id){
+    return $this->model->with(['user','kategori'])->where('user_id', $id)->first();
+  }
+  
   public function save($params){ 
     if (!empty($params['user_id'])) {
       $user  = $this->model->where('user_id', $params['user_id'])->update($params);

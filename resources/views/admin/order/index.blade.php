@@ -15,19 +15,15 @@
                             <th>Pekerja</th>
                             <th>Majikan</th>
                             <th>Status</th>
-                            <th>Note</th>
-                            <th>Tanggal dibuat</th>
+                            <th>Nomer Majikan</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($pekerja as $item)
+                        @foreach ($orders as $item)
                         <tr>
-                            <td>{{ $item->first_name }} {{ $item->last_name }}</td>
-                            <td>{{ $item->email }}</td>
-                            <td>{{ $item->address }}</td>
-                            <td>{{ $item->district }}</td>
-                            <td>{{ $item->regency_city }}</td>
-                            <td>{{ $item->province }}</td>
+                            <td>{{ $item->fullNamePekerja }}</td>
+                            <td>{{ $item->fullNameMajikan }}</td>
+                            <td>{{ $item->status }}</td>
                             <td>{{ $item->phone_number }}</td>
                         </tr>
                         @endforeach

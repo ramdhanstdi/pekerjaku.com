@@ -6,6 +6,7 @@ use App\Models\Pekerja;
 use App\Service\KategoriService;
 use App\Service\PekerjaService;
 use App\Service\UserService;
+use App\Service\OrderService;
 use Illuminate\Http\Request;
 
 class PekerjaController extends Controller
@@ -13,16 +14,19 @@ class PekerjaController extends Controller
     protected $pekerjaService;
     protected $kategoriService;
     protected $usersService;
+    protected $orderService;
 
     public function __construct(
         PekerjaService $pekerjaService,
         KategoriService $kategoriService,
-        UserService $userService
+        UserService $userService,
+        OrderService $orderService,
     )
     {
         $this->usersService = $userService;
         $this->kategoriService = $kategoriService;
         $this->pekerjaService = $pekerjaService;
+        $this->orderService = $orderService;
     }
         
     public function index(){
@@ -55,6 +59,39 @@ class PekerjaController extends Controller
         $pekerja = collect($p)->take(4);
         return view('landingpage.detail', compact('data','pekerja'));
     }
+
+    public function placeOrder(Request $request, $pekerjaId)
+    {
+        // Validate request
+        $validated = $request->validate([
+            'note' => 'nullable|string|max:255',
+        ]);
+
+        $pekerja = $this->pekerjaService->getOneByUserId($pekerjaId);
+        $userPekerja = $this->usersService->getOne($pekerjaId);
+      
+        // Prepare data for the order
+        $data = [
+            'pekerja_id' => $pekerja->getData()->data->id,
+            'user_id' => auth()->user()->id,
+            'full_name' => auth()->user()->first_name.auth()->user()->last_name,
+            'email' => auth()->user()->email,
+            'address' => auth()->user()->address,
+            'phone_number' => auth()->user()->phone_number,
+            'status' => 'pending', // Default status
+            'note' => $validated['note'] ?? null,
+        ];
+
+        // Place the order using the service
+        $order = $this->orderService->placeOrder($data);
+
+        // Redirect to WhatsApp with a message
+        $message = urlencode("Saya ingin memesan pekerja dengan nama {$userPekerja} dan ID {$order->pekerja_id}");
+        $whatsAppUrl = "https://wa.me/62895334930931?text=$message";
+
+        return redirect($whatsAppUrl);
+    }
+
 
     public function getAll(){
         return $this->pekerjaService->getAll();
