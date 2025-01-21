@@ -10,6 +10,7 @@ use App\Http\Controllers\MajikanController;
 use App\Http\Controllers\PekerjaController;
 use App\Http\Controllers\ProsedurController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LoadFileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/login', [AuthController::class, 'loginPage'])->name('login')->middleware('web');
 Route::post('/login-post', [AuthController::class, 'loginPost'])->name('login.post')->middleware('web');
 Route::get('/registerasi', [AuthController::class, 'registerPage'])->name('registerasi');
@@ -63,3 +63,5 @@ Route::get('/lowongan', [LowonganController::class, 'index'])->name('lowongan');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+

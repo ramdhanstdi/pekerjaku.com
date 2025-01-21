@@ -85,7 +85,7 @@
           <div class="col-lg-6 col-md-6">
               <div class="product__details__pic">
                   <div class="product__details__pic__item">
-                      <img class="product__details__pic__item--large"
+                      <img class="product__details__pic__item--large" style="object-fit: cover"
                           src="{{ Storage::url($data->user->image) }}" alt="">
                   </div>
               </div>

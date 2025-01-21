@@ -191,16 +191,58 @@
 
                             // Populate modal content with user details
                             $('#userDetails').html(`
-                                <img src="${user.image ? '/storage/' + user.image : '/default-avatar.png'}" alt="User Image" width="50">
-                                <p class='m-1' ><strong>Nama:</strong> ${user.first_name} ${user.last_name}</p>
-                                <p class='m-1' ><strong>Email:</strong> ${user.email}</p>
-                                <p class='m-1' ><strong>Alamat:</strong> ${user.address}</p>
-                                <p class='m-1' ><strong>Kecamatan:</strong> ${user.district}</p>
-                                <p class='m-1' ><strong>Kabupaten/Kota:</strong> ${user.regency_city}</p>
-                                <p class='m-1' ><strong>Province:</strong> ${user.province}</p>
-                                <p class='m-1' ><strong>No Telepon:</strong> ${user.phone_number}</p>
-                                <p class='m-1' ><strong>Nomor Whatsapp:</strong> ${user.number_whatsapp}</p>
-                                <p class='m-1' ><strong>Role:</strong> ${user.level_user === 3 ? 'Pekerja' : 'Majikan'}</p>
+                                <div class='d-flex justify-content-center mb-3'>
+                                    <img src="${user.image ? '/storage/' + user.image : '/default-avatar.png'}" style="object-fit: cover" alt="User Image" width="250">
+                                </div>
+                                <table class='table'>
+                                    <tbody>
+                                        <tr>
+                                            <td>Nama</td>
+                                            <td>:</td>
+                                            <td>${user.first_name} ${user.last_name}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td>:</td>
+                                            <td>${user.email}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Alamat</td>
+                                            <td>:</td>
+                                            <td>${user.address}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kecamatan</td>
+                                            <td>:</td>
+                                            <td>${user.district}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kabupaten/Kota</td>
+                                            <td>:</td>
+                                            <td>${user.regency_city}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Provinsi</td>
+                                            <td>:</td>
+                                            <td>${user.province}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>No Telepon</td>
+                                            <td>:</td>
+                                            <td>${user.phone_number}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>No Whatsapp</td>
+                                            <td>:</td>
+                                            <td>${user.number_whatsapp}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Role</td>
+                                            <td>:</td>
+                                            <td>${user.level_user === 3 ? 'Pekerja' : 'Majikan'}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             `);
 
                             // Show the modal

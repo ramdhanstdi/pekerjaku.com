@@ -60,7 +60,7 @@
             <div class="categories__slider owl-carousel">
                 @foreach ($kategori as $item)
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/content/kategori.jpg">
+                        <div class="categories__item set-bg" style="object-fit: cover" data-setbg="{{ Storage::url($item->image) }}">
                             <h5><a href="#">{{ $item->name }}</a></h5>
                         </div>
                     </div>
