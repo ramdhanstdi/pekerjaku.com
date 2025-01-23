@@ -58,7 +58,7 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="header__top__left">
                         <ul>
-                            <li><i class="fa fa-envelope"></i>{{auth()->user()->email}}</li>
+                            <li><i class="fa fa-envelope"></i>{{auth()->user()->email ?? ''}}</li>
                             <li>Pekerjaku Portal Pencari Kerja No 1</li>
                         </ul>
                     </div>

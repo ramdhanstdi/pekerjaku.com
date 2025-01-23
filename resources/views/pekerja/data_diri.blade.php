@@ -6,7 +6,7 @@
         <h1>Data Diri</h1>
         <div class="row mb-5">
           <div class="col border">
-            <img src="./../img/logo-pekerja.jpg" width="90" alt="">
+            <img src="{{Storage::url(auth()->user()->image)}}" width="250" alt="">
           </div>
           <div class="col-9 border p-2">
             <form id="formDataDiri">
@@ -23,7 +23,7 @@
                     <select id="kategori_id" name="kategori_id" required>
                       <option {{ empty($dataDiri->kategori_id) ? 'selected' : '' }} value="" disabled selected>Pilih Pekerjaan</option>
                       @foreach ($kategori as $item)
-                      <option {{ $dataDiri->kategori_id == $item->id ? 'selected' : '' }} value={{$item->id}} data-filter={{$item->name}}>{{ $item->name }}</option>
+                      <option {{ $dataDiri && $dataDiri->kategori_id == $item->id ? 'selected' : '' }} value={{$item->id}} data-filter={{$item->name}}>{{ $item->name }}</option>
                       @endforeach
                     </select>
                   </div>

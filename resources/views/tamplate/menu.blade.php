@@ -76,7 +76,7 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="header__top__left">
                         <ul>
-                            <li><i class="fa fa-envelope"></i>{{auth()->user()->email}}</li>
+                            <li><i class="fa fa-envelope"></i>{{auth()->user()->email ?? ''}}</li>
                             <li>Pekerjaku Portal Pencari Kerja No 1</li>
                         </ul>
                     </div>
@@ -84,13 +84,15 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="header__top__right">
                         <div class="header__top__right__social">
-                            @if (auth()->user()->level_user == 1)
-                            <a href="{{ route('admin.dashboard') }}" style="cursor: pointer">Pergi ke Dashboard</a>
-                        @elseif (auth()->user()->level_user == 2)
-                            <a href="{{ route('majikan.dashboard') }}" style="cursor: pointer">Pergi ke Dashboard</a>
-                        @elseif (auth()->user()->level_user == 3)
-                            <a href="{{ route('pekerja.dashboard') }}" style="cursor: pointer">Pergi ke Dashboard</a>
-                        @endif                        
+                            @if (auth()->user() && auth()->user()->level_user == 1)
+                                <a href="{{ route('admin.dashboard') }}" style="cursor: pointer">Pergi ke Dashboard</a>
+                            @elseif (auth()->user() && auth()->user()->level_user == 2)
+                                <a href="{{ route('majikan.dashboard') }}" style="cursor: pointer">Pergi ke Dashboard</a>
+                            @elseif (auth()->user() && auth()->user()->level_user == 3)
+                                <a href="{{ route('pekerja.dashboard') }}" style="cursor: pointer">Pergi ke Dashboard</a>
+                            @else
+                                <span style="cursor: not-allowed; color: gray;">No Dashboard Available</span>
+                            @endif
                         </div>
                         {{-- <div class="header__top__right__language">
                             <img src="img/language.png" alt="">

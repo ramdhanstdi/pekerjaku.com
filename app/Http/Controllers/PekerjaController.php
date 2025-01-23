@@ -96,7 +96,7 @@ class PekerjaController extends Controller
     }
 
     public function dataDiri(){
-        $userId = auth()->id(); // Get the authenticated user's ID
+        $userId = auth()->user()->id; // Get the authenticated user's ID
         $dataDiri = Pekerja::where('user_id', $userId)->first(); // Fetch the user's data
         $kategori = $this->kategoriService->getAlls(); // Fetch kategori data
         return view('pekerja.data_diri', compact('kategori', 'dataDiri'));
@@ -150,8 +150,16 @@ class PekerjaController extends Controller
         return $this->pekerjaService->getOne();
     }
 
-    public function save(){
-        return $this->pekerjaService->save();
+    public function save(Request $request){
+        // save data model
+        $attributes = ['user_id' => auth()->user()->id];
+
+        $pekerja = Pekerja::updateOrCreate($attributes, $request->all());
+
+        return response()->json([
+            'message' => 'Pekerja data saved successfully!',
+            'pekerja' => $pekerja,
+        ]);
     }
 
     public function delete(){

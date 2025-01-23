@@ -110,7 +110,7 @@
                           </div>
                       </div>
                   </div> --}}
-                    @if (!empty(auth()->user()->level_user == 2))
+                    @if (auth()->user() && auth()->user()->level_user == 2)
                         <form action="{{ route('place.order', $data->user->id) }}" method="POST" style="display: inline;">
                             @csrf
                             <button type="submit" class="primary-btn">Pesan Sekarang</button>
