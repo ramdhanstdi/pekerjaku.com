@@ -58,6 +58,7 @@ Route::get('/pekerja', [PekerjaController::class, 'index'])->name('pekerja');
 Route::get('/pekerja/detail/{id}', [PekerjaController::class, 'detailPekerja'])->name('pekerja.detail');
 Route::post('/pekerja/detail/{id}', [PekerjaController::class, 'placeOrder'])->name('place.order');
 
+Route::get('/pekerja', [PekerjaController::class, 'pekerja'])->name('pekerja');
 Route::get('/prosedur', [ProsedurController::class, 'index'])->name('prosedur');
 Route::get('/lowongan', [LowonganController::class, 'index'])->name('lowongan');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');

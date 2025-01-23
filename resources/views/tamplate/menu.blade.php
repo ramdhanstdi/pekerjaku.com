@@ -131,15 +131,7 @@
                 <nav class="header__menu">
                     <ul style="width:800px;">
                         <li class="active"><a href="{{ route('/') }}">Home</a></li>
-                        <li><a href="#">Pekerja</a>
-                            <ul class="header__menu__dropdown">
-                                <li><a href="./shop-details.html">ART</a></li>
-                                <li><a href="./shoping-cart.html">Penjaga Anak</a></li>
-                                <li><a href="./checkout.html">Penjaga Lansia</a></li>
-                                <li><a href="./blog-details.html">Perawat Kebun</a></li>
-                                <li><a href="./blog-details.html">Supir Pribadi</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="{{ route('pekerja') }}">Pekerja</a></li>
                         <li><a href="{{ route('prosedur') }}">Prosedur</a></li>
                         <li><a href="{{ route('lowongan') }}">Lowongan</a></li>
                         <li><a href="{{ route('blog') }}">Blog</a></li>

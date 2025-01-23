@@ -31,11 +31,60 @@ class PekerjaController extends Controller
         
     public function index(){
         $pekerja = $this->pekerjaService->getAlls()->where('user.level_user', 3);
-        $kategori = $this->kategoriService->getAlls();
-        $view1 = view('landingpage.pekerja', compact('kategori', 'pekerja')) -> render();
-        $view2 = view('admin.pekerja.index', compact('pekerja')) -> render();
-        return $view1 . $view2 ;
+        return view('admin.pekerja.index', compact('pekerja')) -> render();
     }
+
+    public function pekerja(Request $request)
+    {
+        // Initialize the query for the Pekerja model
+        $pekerjaQuery = Pekerja::query();
+    
+        // Fetch filters and sorting from the request
+        $search = $request->input('search'); // For filtering by search
+        $sortBy = $request->input('sort_by', 'id'); // Default sorting column
+        $sortOrder = $request->input('sort_order', 'desc'); // Default sorting order
+        $perPage = $request->input('per_page', 10); // Default pagination size
+        $categoryId = $request->input('category_id'); // Category filter
+    
+        // Apply search filter if provided
+        if ($search) {
+            $pekerjaQuery->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%") // Assuming 'name' is a column in the Pekerja model
+                      ->orWhere('email', 'like', "%{$search}%"); // Assuming 'email' is a column in the Pekerja model
+            });
+        }
+    
+        // Apply category filter if provided
+        if ($categoryId) {
+            $pekerjaQuery->where('kategori_id', $categoryId); // Assuming 'category_id' is a foreign key in the Pekerja model
+        }
+    
+        // Apply the condition for level_user = 3 (adjust for the correct relationship)
+        $pekerjaQuery->whereHas('user', function ($query) {
+            $query->where('level_user', 3); // Assuming 'user' is a relationship in the Pekerja model
+        });
+    
+        // Get total count before pagination
+        $totalPekerjaCount = $pekerjaQuery->count();
+    
+        // Apply sorting and paginate results
+        $pekerja = $pekerjaQuery->orderBy($sortBy, $sortOrder)->paginate($perPage);
+    
+        // Fetch the latest 5 records
+        $pekerjaBaru = Pekerja::whereHas('user', function ($query) {
+            $query->where('level_user', 3); // Assuming 'user' is a relationship in the Pekerja model
+        })
+        ->orderBy('id', 'desc')
+        ->take(5)
+        ->get();
+    
+        // Fetch categories
+        $kategori = $this->kategoriService->getAlls();
+    
+        // Return view with data
+        return view('landingpage.pekerja', compact('kategori', 'pekerja', 'pekerjaBaru', 'totalPekerjaCount'));
+    }
+    
 
     public function dashboard(){
         return view('pekerja.dashboard');
