@@ -115,6 +115,8 @@
                             @csrf
                             <button type="submit" class="primary-btn">Pesan Sekarang</button>
                         </form>
+                    @elseif (auth()->user() && auth()->user()->level_user != 2)
+                        <div></div>
                     @else
                         <a href="{{ route('login') }}" class="primary-btn">Login to Order</a>
                     @endif

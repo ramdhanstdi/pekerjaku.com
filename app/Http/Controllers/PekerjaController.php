@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use App\Models\Pekerja;
 use App\Service\KategoriService;
 use App\Service\PekerjaService;
@@ -49,8 +50,16 @@ class PekerjaController extends Controller
         // Apply search filter if provided
         if ($search) {
             $pekerjaQuery->where(function ($query) use ($search) {
-                $query->where('name', 'like', "%{$search}%") // Assuming 'name' is a column in the Pekerja model
-                      ->orWhere('email', 'like', "%{$search}%"); // Assuming 'email' is a column in the Pekerja model
+                // Search in related 'user' table for first_name and last_name
+                $query->whereHas('user', function ($usersQuery) use ($search) {
+                    $usersQuery->where('first_name', 'like', "%{$search}%")
+                              ->orWhere('last_name', 'like', "%{$search}%")
+                              ->orWhere('email', 'like', "%{$search}%"); // Assuming 'email' is in the users table
+                })
+                // Search in related 'kategori' table for category name
+                ->orWhereHas('kategori', function ($kategoriQuery) use ($search) {
+                    $kategoriQuery->where('name', 'like', "%{$search}%"); // Assuming 'name' is the column in the kategori table
+                });
             });
         }
     
@@ -154,12 +163,12 @@ class PekerjaController extends Controller
         // save data model
         $attributes = ['user_id' => auth()->user()->id];
 
-        $pekerja = Pekerja::updateOrCreate($attributes, $request->all());
+        Pekerja::updateOrCreate($attributes, $request->all());
 
         return response()->json([
-            'message' => 'Pekerja data saved successfully!',
-            'pekerja' => $pekerja,
-        ]);
+            'status' => true,
+            'message' => 'Data berhasil di tambahkan'
+          ]);
     }
 
     public function delete(){

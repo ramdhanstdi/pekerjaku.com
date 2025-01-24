@@ -43,6 +43,7 @@ Route::middleware(['auth.login'])->prefix('majikan')->group(function () {
     Route::get('dashboard', [MajikanController::class, 'index'])->name('majikan.dashboard');
     Route::get('data-pekerja', [MajikanController::class, 'dataPekerja'])->name('majikan.data_pekerja');
     Route::get('data-diri', [MajikanController::class, 'dataDiri'])->name('majikan.data_diri');
+    Route::post('data-diri', [MajikanController::class, 'save'])->name('majikan.save');
     Route::get('data-order', [MajikanController::class, 'dataOrder'])->name('majikan.order');
 });
 
