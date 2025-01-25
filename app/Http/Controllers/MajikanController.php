@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Order;
 use App\Models\User;
 
 use Illuminate\Http\Request;
@@ -50,11 +52,83 @@ class MajikanController extends Controller
     }
     
 
-    public function dataPekerja(){
-        return view('majikan.data_pekerja');
-    }
+    public function dataOrder(Request $request)
+    {
+        $userId = auth()->user()->id; // Get the authenticated user's ID
+    
+        // Fetch search and pagination parameters
+        $search = $request->input('search');
+        $perPage = $request->input('per_page', 10); // Default to 10 items per page
+    
+        // Query orders with relationships
+        $dataOrderQuery = Order::with(['user', 'pekerja.user'])
+            ->where('user_id', $userId); // Get only the orders of the authenticated user
+    
+        // Apply search filter if provided
+        if ($search) {
+            $dataOrderQuery->whereHas('pekerja.users', function ($query) use ($search) {
+                $query->where('first_name', 'like', "%{$search}%")
+                      ->orWhere('last_name', 'like', "%{$search}%") // Search by pekerja's name
+                      ->orWhere('phone', 'like', "%{$search}%"); // Search by pekerja's phone number
+            })->orWhereHas('user', function ($query) use ($search) {
+                $query->where('first_name', 'like', "%{$search}%") 
+                      ->orWhere('last_name', 'like', "%{$search}%") // Search by ordering user's name
+                      ->orWhere('phone', 'like', "%{$search}%"); // Search by ordering user's phone number
+            });
+        }
 
-    public function dataOrder(){
-        return view('majikan.data_pesan');
+        // Paginate results
+        $dataOrder = $dataOrderQuery->paginate($perPage);
+
+        // Modify each order object to include custom attributes
+        $dataOrder->getCollection()->transform(function ($item) {
+            $item->fullNamePekerja = $item->pekerja->user->first_name ?? 'N/A';
+            $item->telpPekerja = $item->pekerja->user->number_whatsapp ?? 'N/A';
+            $item->fullNameMajikan = $item->user->first_name ?? 'N/A';
+            $item->telpMajikan = $item->user->number_whatsapp ?? 'N/A';
+            return $item;
+        });
+    
+        return view('majikan.data_pesan', compact('dataOrder'));
+    }
+    
+
+    public function dataPekerja(Request $request){
+        $userId = auth()->user()->id; // Get the authenticated user's ID
+    
+        // Fetch search and pagination parameters
+        $search = $request->input('search');
+        $perPage = $request->input('per_page', 10); // Default to 10 items per page
+    
+        // Query orders with relationships
+        $dataOrderQuery = Order::with(['user', 'pekerja.user'])
+            ->where('user_id', $userId); // Get only the orders of the authenticated user
+    
+        // Apply search filter if provided
+        if ($search) {
+            $dataOrderQuery->whereHas('pekerja.users', function ($query) use ($search) {
+                $query->where('first_name', 'like', "%{$search}%")
+                      ->orWhere('last_name', 'like', "%{$search}%") // Search by pekerja's name
+                      ->orWhere('phone', 'like', "%{$search}%"); // Search by pekerja's phone number
+            })->orWhereHas('user', function ($query) use ($search) {
+                $query->where('first_name', 'like', "%{$search}%") 
+                      ->orWhere('last_name', 'like', "%{$search}%") // Search by ordering user's name
+                      ->orWhere('phone', 'like', "%{$search}%"); // Search by ordering user's phone number
+            });
+        }
+
+        // Paginate results
+        $dataOrder = $dataOrderQuery->paginate($perPage);
+
+        // Modify each order object to include custom attributes
+        $dataOrder->getCollection()->transform(function ($item) {
+            $item->fullNamePekerja = $item->pekerja->user->first_name.' '.$item->pekerja->user->last_name ?? 'N/A';
+            $item->telpPekerja = $item->pekerja->user->number_whatsapp ?? 'N/A';
+            $item->fullNameMajikan = $item->user->first_name.' '.$item->user->last_name ?? 'N/A';
+            $item->telpMajikan = $item->user->number_whatsapp ?? 'N/A';
+            return $item;
+        });
+
+        return view('majikan.data_pekerja', compact('dataOrder'));
     }
 }

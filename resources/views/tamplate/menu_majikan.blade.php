@@ -27,21 +27,10 @@
     </div>
     <nav class="humberger__menu__nav mobile-menu">
         <ul style="">
-            <li class="active"><a href="{{ route('majikan.dashboard') }}">Home</a></li>
-            <li><a href="{{ route('majikan.data_diri') }}">Data Diri</a></li>
-            <li><a href="{{ route('majikan.data_pekerja') }}">Pekerja</a>
-                <ul class="header__menu__dropdown">
-                    <li><a href="./shop-details.html">ART</a></li>
-                    <li><a href="./shoping-cart.html">Penjaga Anak</a></li>
-                    <li><a href="./checkout.html">Penjaga Lansia</a></li>
-                    <li><a href="./blog-details.html">Perawat Kebun</a></li>
-                    <li><a href="./blog-details.html">Supir Pribadi</a></li>
-                </ul>
-            </li>
-            <li><a href="{{ route('majikan.order') }}">Data Order</a></li>
-            {{-- <li><a href="{{ route('lowongan') }}">Lowongan</a></li>
-            <li><a href="{{ route('about') }}">About</a></li>
-            <li><a href="{{ route('contact') }}">Contact</a></li> --}}
+            <li class="{{ request()->routeIs('majikan.dashboard') ? 'active' : '' }}"><a href="{{ route('majikan.dashboard') }}">Home</a></li>
+            <li class="{{ request()->routeIs('majikan.data_diri') ? 'active' : '' }}"><a href="{{ route('majikan.data_diri') }}">Data Diri</a></li>
+            <li class="{{ request()->routeIs('majikan.data_pekerja') ? 'active' : '' }}"><a href="{{ route('majikan.data_pekerja') }}">Pekerja</a></li>
+            <li class="{{ request()->routeIs('majikan.order') ? 'active' : '' }}"><a href="{{ route('majikan.order') }}">Data Order</a></li>
         </ul>
     </nav>
     <div id="mobile-menu-wrap"></div>
@@ -118,21 +107,10 @@
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul style="width:800px;">
-                        <li class="active"><a href="{{ route('majikan.dashboard') }}">Home</a></li>
-                        <li><a href="{{ route('majikan.data_diri') }}">Data Diri</a></li>
-                        <li><a href="{{ route('majikan.data_pekerja') }}">Pekerja</a>
-                            <ul class="header__menu__dropdown">
-                                <li><a href="./shop-details.html">ART</a></li>
-                                <li><a href="./shoping-cart.html">Penjaga Anak</a></li>
-                                <li><a href="./checkout.html">Penjaga Lansia</a></li>
-                                <li><a href="./blog-details.html">Perawat Kebun</a></li>
-                                <li><a href="./blog-details.html">Supir Pribadi</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="{{ route('majikan.order') }}">Order</a></li>
-                        {{-- <li><a href="{{ route('blog') }}">Blog</a></li>
-                        <li><a href="{{ route('about') }}">About</a></li>
-                        <li><a href="{{ route('contact') }}">Contact</a></li> --}}
+                        <li class="{{ request()->routeIs('majikan.dashboard') ? 'active' : '' }}"><a href="{{ route('majikan.dashboard') }}">Home</a></li>
+                        <li class="{{ request()->routeIs('majikan.data_diri') ? 'active' : '' }}"><a href="{{ route('majikan.data_diri') }}">Data Diri</a></li>
+                        <li class="{{ request()->routeIs('majikan.data_pekerja') ? 'active' : '' }}"><a href="{{ route('majikan.data_pekerja') }}">Pekerja</a></li>
+                        <li class="{{ request()->routeIs('majikan.order') ? 'active' : '' }}"><a href="{{ route('majikan.order') }}">Data Order</a></li>
                     </ul>
                 </nav>
             </div>

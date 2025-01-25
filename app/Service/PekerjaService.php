@@ -110,6 +110,22 @@ class PekerjaService {
       'description'
     ]);
 
+    if($this->request->file('police_letter')){
+      $file = $this->request->file('police_letter');
+      $extension = $file->getClientOriginalExtension();
+      $name = time() .'.'. $extension;
+      $path = $this->request->file('police_letter')->storeAs('police_letters', $name, 'public');
+    }
+    $params['police_letter'] = $path ?? '';
+    
+    if($this->request->file('doctors_letter')){
+      $file = $this->request->file('doctors_letter');
+      $extension = $file->getClientOriginalExtension();
+      $name = time() .'.'. $extension;
+      $path = $this->request->file('doctors_letter')->storeAs('doctors_letters', $name, 'public');
+    }
+    $params['doctors_letter'] = $path ?? '';
+
     try {
       $this->pekerjaRepository->save($params);
       return response()->json([

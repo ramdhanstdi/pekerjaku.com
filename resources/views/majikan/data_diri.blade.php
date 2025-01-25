@@ -3,7 +3,7 @@
 @section('content')
     <section class="data diri">
       <div class="container">
-        <h1>Data Diri</h1>
+        <h2 class="my-2">Data Diri</h2>
         <div class="row mb-5">
           <div class="col">
             <img src="{{Storage::url(auth()->user()->image)}}" width="250" alt="">

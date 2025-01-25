@@ -137,7 +137,7 @@ class PekerjaController extends Controller
             'address' => auth()->user()->address,
             'phone_number' => auth()->user()->phone_number,
             'status' => 'pending', // Default status
-            'note' => $validated['note'] ?? null,
+            'note' =>  'Menunggu konfirmasi Admin', // Default note
         ];
 
         // Place the order using the service

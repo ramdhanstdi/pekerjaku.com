@@ -99,6 +99,13 @@
                 </div>
             </div>
 
+            <form method="GET" action="{{ route('admin.user') }}" class="mb-3">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Cari nama, email, alamat..." value="{{ request('search') }}">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        
             <div class="py-2">
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
@@ -114,7 +121,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($user as $item)
+                        @foreach ($users as $item)
                         <tr>
                             <td>{{ $item->first_name }} {{ $item->last_name }}</td>
                             <td>{{ $item->email }}</td>
@@ -132,6 +139,40 @@
                     </tbody>
                 </table>
             </div>
+        
+            <!-- Pagination -->
+            <div class="product__pagination">
+                {{-- Check if there are previous pages --}}
+                @if ($users->onFirstPage())
+                    {{-- <span class="disabled">1</span> --}}
+                @else
+                    <a href="{{ $users->previousPageUrl() }}">&laquo;</a>
+                @endif
+            
+                {{-- Loop through pagination links --}}
+                @foreach ($users->links()->elements as $element)
+                    @if (is_string($element))
+                        <span class="disabled">{{ $element }}</span>
+                    @endif
+            
+                    @if (is_array($element))
+                        @foreach ($element as $page => $url)
+                            @if ($page == $users->currentPage())
+                                <a href="#" class="bg-info text-white">{{ $page }}</a>
+                            @else
+                                <a href="{{ $url }}">{{ $page }}</a>
+                            @endif
+                        @endforeach
+                    @endif
+                @endforeach
+            
+                {{-- Check if there are next pages --}}
+                @if ($users->hasMorePages())
+                    <a href="{{ $users->nextPageUrl() }}">&raquo;</a>
+                @endif
+            </div>
+            
+        </div>
         </div>
       </div>
     </section>

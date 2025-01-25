@@ -23,11 +23,11 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\Models\User', 'user_id'); // The user who placed the order
     }
 
     public function pekerja()
     {
-        return $this->belongsTo(Pekerja::class);
+        return $this->belongsTo('App\Models\Pekerja', 'pekerja_id'); // The hired worker
     }
 }
