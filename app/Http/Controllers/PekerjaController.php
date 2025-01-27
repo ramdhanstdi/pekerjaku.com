@@ -167,7 +167,7 @@ class PekerjaController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Data berhasil di tambahkan'
+            'message' => 'Data berhasil di simpan'
           ]);
     }
 

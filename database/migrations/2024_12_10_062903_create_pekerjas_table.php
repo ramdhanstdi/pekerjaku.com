@@ -36,7 +36,7 @@ return new class extends Migration
             $table->string('work_experience_abroad')->nullable(); // pengalaman kerja di luar negri
             $table->string('english')->nullable(); // bahasa inggris
             $table->text('skills')->nullable(); // keterampilan
-            $table->json('willing_to_work_in')->nullable(); // bersedia bekerja di
+            $table->text('willing_to_work_in')->nullable(); // bersedia bekerja di
             $table->string('employee_status')->nullable(); // status bekerja
             $table->text('skill')->nullable(); // keahlian
             $table->text('description')->nullable(); // keahlian

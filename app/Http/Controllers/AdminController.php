@@ -123,6 +123,8 @@ class AdminController extends Controller
                     ->orWhere('province', 'like', "%{$search}%");
             });
         }
+
+        $userQuery->where('level_user', '!=', 1);
     
         // Get total count before pagination
         $totalUserCount = $userQuery->count();
