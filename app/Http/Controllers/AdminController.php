@@ -149,6 +149,8 @@ class AdminController extends Controller
         $orders = $orders->map(function ($order) {
             $order->fullNameMajikan = $order->user->first_name . ' ' . $order->user->last_name;
             $order->fullNamePekerja = $order->pekerja->user->first_name . ' ' . $order->pekerja->user->last_name;
+            $order->telpPekerja = $order->pekerja->user->number_whatsapp;
+            $order->telpMajikan = $order->user->number_whatsapp;
             return $order;
         });
 

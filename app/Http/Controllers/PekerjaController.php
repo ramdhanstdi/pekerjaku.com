@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kategori;
+use App\Models\User;
 use App\Models\Pekerja;
 use App\Service\KategoriService;
 use App\Service\PekerjaService;
@@ -126,8 +126,9 @@ class PekerjaController extends Controller
         ]);
 
         $pekerja = $this->pekerjaService->getOneByUserId($pekerjaId);
-        $userPekerja = $this->usersService->getOne($pekerjaId);
       
+        $userPekerja = User::where('id', $pekerjaId)->first();
+        $name = $userPekerja->first_name.' '.$userPekerja->last_name;
         // Prepare data for the order
         $data = [
             'pekerja_id' => $pekerja->getData()->data->id,
@@ -144,7 +145,7 @@ class PekerjaController extends Controller
         $order = $this->orderService->placeOrder($data);
 
         // Redirect to WhatsApp with a message
-        $message = urlencode("Saya ingin memesan pekerja dengan nama {$userPekerja} dan ID {$order->pekerja_id}");
+        $message = urlencode("Saya ingin memesan pekerja dengan nama {$name} dengan ID Order {$order->id}");
         $whatsAppUrl = "https://wa.me/62895334930931?text=$message";
 
         return redirect($whatsAppUrl);
