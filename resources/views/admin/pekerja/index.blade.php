@@ -15,6 +15,7 @@
                             <th>Nama</th>
                             <th>Kategori</th>
                             <th>Pengalaman</th>
+                            <th>Status Bekerja</th>
                             <th>Skills</th>
                             <th>Pendidikan</th>
                             <th>Email</th>
@@ -31,6 +32,14 @@
                             <td>{{ $item->first_name }} {{ $item->last_name }}</td>
                             <td>{{ $item->kategori_name }}</td>
                             <td>{{ $item->experience }}</td>
+                            <td>
+                                 <span class="badge 
+                                    @if ($item->employee_status == 'tersedia') bg-success
+                                    @elseif ($item->employee_status == 'bekerja') bg-warning
+                                    @endif text-white text-capitalize p-2"> 
+                                    {{ $item->employee_status }}
+                                </span>
+                            </td>
                             <td>{{ $item->skills }}</td>
                             <td>{{ $item->education }}</td>
                             <td>{{ $item->email }}</td>

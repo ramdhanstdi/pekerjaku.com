@@ -78,7 +78,7 @@ class MajikanController extends Controller
         }
 
         // Paginate results
-        $dataOrderQuery->where('employee_status', '==', 'active');
+        $dataOrderQuery->where('employee_status', '==', 'working');
 
         $dataOrder = $dataOrderQuery->paginate($perPage);
 

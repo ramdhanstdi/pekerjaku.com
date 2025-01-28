@@ -38,16 +38,16 @@
                             <td>
                                 <span class="badge 
                                     @if ($item->status == 'pending') bg-secondary
-                                    @elseif ($item->status == 'reject') bg-danger
+                                    @elseif ($item->status == 'rejected') bg-danger
                                     @elseif ($item->status == 'success') bg-success
-                                    @elseif ($item->status == 'onduty') bg-warning
+                                    @elseif ($item->status == 'bekerja') bg-warning
                                     @endif text-white text-capitalize p-2"> 
                                     {{ $item->status }}
                                 </span>
                             </td>
                         
                             <td>
-                                @if ($item->status !== 'success' && $item->status !== 'reject')
+                                @if ($item->status === 'pending')
                                     <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#phoneModal{{ $item->id }}">
                                         Details
                                     </button>
@@ -72,8 +72,15 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-danger" onclick="rejectAction({{ $item->id }})">Reject</button>
-                                <button type="button" class="btn btn-success" onclick="continueAction('{{ $item }}')">Continue</button>
+                                <form method="POST" action="{{ route('reject.order', $item->id) }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Reject</button>
+                                </form>
+                                
+                                <form method="POST" action="{{ route('confirm.order', $item->id) }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success">Continue</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -87,17 +94,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('./js/jquery-3.3.1.min.js') }}"></script>
-    <script>
-        function rejectAction(id) {
-            alert("Rejected user with ID: " + id);
-            // You can add AJAX call here for backend rejection logic
-        }
-    
-        function continueAction(id) {
-            alert("Continuing with user ID: " + id);
-            // Example: Redirecting to WhatsApp
-            window.location.href = "https://wa.me/" + document.querySelector(`#phoneModal${id} strong`).innerText;
-        }
-    </script>
-    
 @endsection
+    
+@push('script')
+<script>
+    new DataTable('#example');
+</script>
+@endpush

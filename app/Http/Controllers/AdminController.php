@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pekerja;
 use App\Models\User;
+use App\Models\Order;
 use App\Service\KategoriService;
 use Illuminate\Http\Request;
 use App\Service\PekerjaService;
@@ -156,6 +157,44 @@ class AdminController extends Controller
 
         return view('admin.order.index', compact('orders'));
     }
-
-
+    
+    public function rejectOrder($id) {
+        $order = Order::find($id);
+    
+        if ($order) {
+            // Update order status
+            $order->update(['status' => 'rejected']);
+    
+            // Update pekerja status using pekerja_id from the order
+            Pekerja::where('id', $order->pekerja_id)->update(['employee_status' => 'tersedia']);
+    
+            // Redirect with success message
+            return redirect()->route('admin.order')->with('success', 'Order rejected successfully!');
+        }
+    
+        return redirect()->route('admin.order')->with('error', 'Order not found!');
+    }
+    
+    public function confirmOrder($id) {
+        $order = Order::find($id);
+    
+        if ($order) {
+            // Update the selected order status to "bekerja"
+            $order->update(['status' => 'bekerja']);
+    
+            // Reject all other orders with the same pekerja_id that have status "pending"
+            Order::where('pekerja_id', $order->pekerja_id)
+                ->where('status', 'pending')
+                ->update(['status' => 'rejected']);
+    
+            // Update pekerja status to "bekerja"
+            Pekerja::where('id', $order->pekerja_id)->update(['employee_status' => 'bekerja']);
+    
+            // Redirect with success message
+            return redirect()->route('admin.order')->with('success', 'Order confirmed successfully! Other pending orders for this worker were rejected.');
+        }
+    
+        return redirect()->route('admin.order')->with('error', 'Order not found!');
+    }
+    
 }

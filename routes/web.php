@@ -45,6 +45,7 @@ Route::middleware(['auth.login'])->prefix('majikan')->group(function () {
     Route::get('data-diri', [MajikanController::class, 'dataDiri'])->name('majikan.data_diri');
     Route::post('data-diri', [MajikanController::class, 'save'])->name('majikan.save');
     Route::get('data-order', [MajikanController::class, 'dataOrder'])->name('majikan.order');
+    
 });
 
 Route::middleware(['auth.login'])->prefix('admin')->group(function(){
@@ -53,6 +54,8 @@ Route::middleware(['auth.login'])->prefix('admin')->group(function(){
     Route::get('user', [AdminController::class, 'user'])->name('admin.user');
     Route::get('lowongan', [AdminController::class, 'lowongan'])->name('admin.lowongan');
     Route::get('order', [AdminController::class, 'order'])->name('admin.order');
+    Route::post('/reject-order/{id}', [AdminController::class, 'rejectOrder'])->name('reject.order');
+    Route::post('/confirm-order/{id}', [AdminController::class, 'confirmOrder'])->name('confirm.order');
 });
 
 Route::get('/pekerja', [PekerjaController::class, 'index'])->name('pekerja');
