@@ -180,15 +180,17 @@ class AdminController extends Controller
     
         if ($order) {
             // Update the selected order status to "bekerja"
-            $order->update(['status' => 'bekerja']);
+            $order->update(['status' => 'bekerja', 'note' => 'Order telah dikonfirmasi']);
     
             // Reject all other orders with the same pekerja_id that have status "pending"
             Order::where('pekerja_id', $order->pekerja_id)
                 ->where('status', 'pending')
-                ->update(['status' => 'rejected']);
+                ->update(['status' => 'rejected', 'note' => 'Order lain telah dikonfirmasi']);
     
             // Update pekerja status to "bekerja"
-            Pekerja::where('id', $order->pekerja_id)->update(['employee_status' => 'bekerja']);
+            Pekerja::where('id', $order->pekerja_id)->update([
+                'employee_status' => 'bekerja',
+            ]);
     
             // Redirect with success message
             return redirect()->route('admin.order')->with('success', 'Order confirmed successfully! Other pending orders for this worker were rejected.');

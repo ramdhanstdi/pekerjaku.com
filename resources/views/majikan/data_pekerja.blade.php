@@ -28,11 +28,26 @@
                     <tr>
                         <td>{{ $item->fullNamePekerja }}</td>
                         <td>{{ $item->telpPekerja }}</td>
-                        <td>{{ $item->status }}</td>
+                        <td>
+                            <span class="badge 
+                                @if ($item->status == 'tersedia') bg-success
+                                @elseif ($item->status == 'bekerja') bg-warning
+                                @endif text-white text-capitalize p-2"> 
+                                {{ $item->status }}
+                            </span>
+                        </td>
                         <td>{{ $item->note }}</td>
                         <td>
-                          <a class="btn btn-success" href="http://wa.me/{{$item->telpPekerja}}">Hubungi Pekerja</a>
-                        </td>
+                          @if($item->status === 'pending')
+                              <a class="btn btn-warning" href="http://wa.me/{{$adminPhone ?? '6288213142134'}}">Hubungi Admin</a>
+                          @elseif($item->status === 'bekerja')
+                              <a class="btn btn-success" href="http://wa.me/{{$item->telpPekerja}}">Hubungi Pekerja</a>
+                              <a class="btn btn-danger" href="http://wa.me/{{$item->telpPekerja}}">Berhentikan Pekerja</a>
+                          @else
+                              <span class="badge bg-secondary">Status Tidak Diketahui</span>
+                          @endif
+                      </td>
+                      
                     </tr>
                     @endforeach
                 </tbody>

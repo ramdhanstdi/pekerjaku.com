@@ -78,7 +78,6 @@ class MajikanController extends Controller
         }
 
         // Paginate results
-        $dataOrderQuery->where('employee_status', '==', 'working');
 
         $dataOrder = $dataOrderQuery->paginate($perPage);
 
@@ -95,42 +94,51 @@ class MajikanController extends Controller
     }
     
 
-    public function dataPekerja(Request $request){
+    public function dataPekerja(Request $request) {
         $userId = auth()->user()->id; // Get the authenticated user's ID
     
         // Fetch search and pagination parameters
         $search = $request->input('search');
         $perPage = $request->input('per_page', 10); // Default to 10 items per page
     
-        // Query orders with relationships
+        // Query orders with relationships and filter by status "bekerja"
         $dataOrderQuery = Order::with(['user', 'pekerja.user'])
-            ->where('user_id', $userId); // Get only the orders of the authenticated user
+            ->where('user_id', $userId)
+            ->where('status', '=', 'bekerja'); // Corrected the where clause
     
         // Apply search filter if provided
         if ($search) {
-            $dataOrderQuery->whereHas('pekerja.users', function ($query) use ($search) {
-                $query->where('first_name', 'like', "%{$search}%")
-                      ->orWhere('last_name', 'like', "%{$search}%") // Search by pekerja's name
-                      ->orWhere('phone', 'like', "%{$search}%"); // Search by pekerja's phone number
-            })->orWhereHas('user', function ($query) use ($search) {
-                $query->where('first_name', 'like', "%{$search}%") 
-                      ->orWhere('last_name', 'like', "%{$search}%") // Search by ordering user's name
-                      ->orWhere('phone', 'like', "%{$search}%"); // Search by ordering user's phone number
+            $dataOrderQuery->where(function ($query) use ($search) {
+                $query->whereHas('pekerja.user', function ($query) use ($search) {
+                    $query->where('first_name', 'like', "%{$search}%")
+                          ->orWhere('last_name', 'like', "%{$search}%")
+                          ->orWhere('number_whatsapp', 'like', "%{$search}%"); // Corrected field name
+                })
+                ->orWhereHas('user', function ($query) use ($search) {
+                    $query->where('first_name', 'like', "%{$search}%") 
+                          ->orWhere('last_name', 'like', "%{$search}%")
+                          ->orWhere('number_whatsapp', 'like', "%{$search}%");
+                });
             });
         }
-
+    
         // Paginate results
         $dataOrder = $dataOrderQuery->paginate($perPage);
-
-        // Modify each order object to include custom attributes
+    
+        // Modify each order object to include custom attributes safely
         $dataOrder->getCollection()->transform(function ($item) {
-            $item->fullNamePekerja = $item->pekerja->user->first_name.' '.$item->pekerja->user->last_name ?? 'N/A';
-            $item->telpPekerja = $item->pekerja->user->number_whatsapp ?? 'N/A';
-            $item->fullNameMajikan = $item->user->first_name.' '.$item->user->last_name ?? 'N/A';
-            $item->telpMajikan = $item->user->number_whatsapp ?? 'N/A';
+            $pekerjaUser = $item->pekerja->user ?? null;
+            $majikanUser = $item->user ?? null;
+    
+            $item->fullNamePekerja = $pekerjaUser ? "{$pekerjaUser->first_name} {$pekerjaUser->last_name}" : 'N/A';
+            $item->telpPekerja = $pekerjaUser->number_whatsapp ?? 'N/A';
+            $item->fullNameMajikan = $majikanUser ? "{$majikanUser->first_name} {$majikanUser->last_name}" : 'N/A';
+            $item->telpMajikan = $majikanUser->number_whatsapp ?? 'N/A';
+    
             return $item;
         });
-
+    
         return view('majikan.data_pekerja', compact('dataOrder'));
     }
+    
 }
