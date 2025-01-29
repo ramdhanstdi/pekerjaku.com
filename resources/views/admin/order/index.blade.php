@@ -39,7 +39,7 @@
                                 <span class="badge 
                                     @if ($item->status == 'pending') bg-secondary
                                     @elseif ($item->status == 'rejected') bg-danger
-                                    @elseif ($item->status == 'success') bg-success
+                                    @elseif ($item->status == 'selesai') bg-success
                                     @elseif ($item->status == 'bekerja') bg-warning
                                     @endif text-white text-capitalize p-2"> 
                                     {{ $item->status }}

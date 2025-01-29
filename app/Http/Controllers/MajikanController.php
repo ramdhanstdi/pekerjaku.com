@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\User;
+use App\Models\Pekerja;
 
 use Illuminate\Http\Request;
 
@@ -140,5 +141,24 @@ class MajikanController extends Controller
     
         return view('majikan.data_pekerja', compact('dataOrder'));
     }
+
+    public function stopPekerja($id) {
+        $order = Order::find($id);
+    
+        if ($order) {
+            // Update order status to "berhenti"
+            $order->update(['status' => 'selesai', 'note' => 'Pekerja telah selesai bekerja.']);
+    
+            // Update pekerja status and note
+            Pekerja::where('id', $order->pekerja_id)->update([
+                'employee_status' => 'tersedia',
+            ]);
+    
+            return redirect()->route('majikan.data_pekerja')->with('success', 'Pekerja berhasil diberhentikan.');
+        }
+    
+        return redirect()->route('majikan.data_pekerja')->with('error', 'Data pekerja tidak ditemukan.');
+    }
+    
     
 }

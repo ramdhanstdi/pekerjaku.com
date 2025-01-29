@@ -40,14 +40,38 @@
                         <td>
                           @if($item->status === 'pending')
                               <a class="btn btn-warning" href="http://wa.me/{{$adminPhone ?? '6288213142134'}}">Hubungi Admin</a>
-                          @elseif($item->status === 'bekerja')
+                              @elseif($item->status === 'bekerja')
                               <a class="btn btn-success" href="http://wa.me/{{$item->telpPekerja}}">Hubungi Pekerja</a>
-                              <a class="btn btn-danger" href="http://wa.me/{{$item->telpPekerja}}">Berhentikan Pekerja</a>
-                          @else
-                              <span class="badge bg-secondary">Status Tidak Diketahui</span>
+                              
+                              <!-- Button to trigger the modal -->
+                              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmStopModal{{$item->id}}">
+                                  Berhentikan Pekerja
+                              </button>
+                          
+                              <!-- Confirmation Modal -->
+                              <div class="modal fade" id="confirmStopModal{{$item->id}}" tabindex="-1" aria-labelledby="confirmStopLabel{{$item->id}}" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                              <h5 class="modal-title" id="confirmStopLabel{{$item->id}}">Konfirmasi Berhentikan Pekerja</h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                              Apakah Anda yakin ingin memberhentikan pekerja ini?
+                                          </div>
+                                          <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                              <form action="{{ route('majikan.berhenti', $item->id) }}" method="POST">
+                                                  @csrf
+                                                  @method('PUT')
+                                                  <button type="submit" class="btn btn-danger">Ya, Berhentikan</button>
+                                              </form>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
                           @endif
                       </td>
-                      
                     </tr>
                     @endforeach
                 </tbody>
@@ -60,4 +84,14 @@
     </div>
   </div>
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('./js/jquery-3.3.1.min.js') }}"></script>
+
 @endsection
+
+@push('script')
+<script>
+    new DataTable('#example');
+</script>
+@endpush

@@ -23,7 +23,14 @@
                     <tr>
                         <td>{{ $item->fullNamePekerja }}</td>
                         <td>{{ $item->telpPekerja }}</td>
-                        <td>{{ $item->status }}</td>
+                        <td>
+                          <span class="badge 
+                              @if ($item->status == 'selesai') bg-success
+                              @elseif ($item->status == 'bekerja') bg-warning
+                              @endif text-white text-capitalize p-2"> 
+                              {{ $item->status }}
+                          </span>
+                        </td>
                         <td>{{ $item->note }}</td><td>
                           <a class="btn btn-success" href="http://wa.me/628872123111">Hubungi Admin</a>
                         </td>
@@ -36,3 +43,9 @@
   </div>
 </section>
 @endsection
+
+@push('script')
+<script>
+    new DataTable('#example');
+</script>
+@endpush

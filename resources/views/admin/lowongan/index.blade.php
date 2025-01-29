@@ -136,3 +136,9 @@
         });
     </script>
 @endsection
+
+@push('script')
+<script>
+    new DataTable('#example');
+</script>
+@endpush
