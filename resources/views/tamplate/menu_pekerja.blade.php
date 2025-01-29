@@ -27,11 +27,9 @@
     </div>
     <nav class="humberger__menu__nav mobile-menu">
         <ul style="">
-            <li class="active"><a href="{{ route('/') }}">Home</a></li>
-            <li><a href="{{ route('blog') }}">Data Diri</a></li>
-            <li><a href="{{ route('lowongan') }}">Lowongan</a></li>
-            {{-- <li><a href="{{ route('about') }}">About</a></li>
-            <li><a href="{{ route('contact') }}">Contact</a></li> --}}
+            <li class="{{ request()->routeIs('pekerja.dashboard') ? 'active' : '' }}" ><a href="{{ route('pekerja.dashboard') }}">Home</a></li>
+            <li class="{{ request()->routeIs('pekerja.data-diri') ? 'active' : '' }}"><a href="{{ route('pekerja.data_diri') }}">Data Diri</a></li>
+            <li class="{{ request()->routeIs('pekerja.lowongan') ? 'active' : '' }}"><a href="{{ route('pekerja.lowongan') }}">Lowongan</a></li>
         </ul>
     </nav>
     <div id="mobile-menu-wrap"></div>
@@ -108,9 +106,9 @@
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul style="width:800px;">
-                        <li class="active"><a href="{{ route('pekerja.dashboard') }}">Home</a></li>
-                        <li><a href="{{ route('pekerja.data_diri') }}">Data Diri</a></li>
-                        <li><a href="{{ route('pekerja.lowongan') }}">Lowongan</a></li>
+                        <li class="{{ request()->routeIs('pekerja.dashboard') ? 'active' : '' }}" ><a href="{{ route('pekerja.dashboard') }}">Home</a></li>
+                        <li class="{{ request()->routeIs('pekerja.data-diri') ? 'active' : '' }}"><a href="{{ route('pekerja.data_diri') }}">Data Diri</a></li>
+                        <li class="{{ request()->routeIs('pekerja.lowongan') ? 'active' : '' }}"><a href="{{ route('pekerja.lowongan') }}">Lowongan</a></li>
                         {{-- <li><a href="{{ route('blog') }}">Blog</a></li>
                         <li><a href="{{ route('about') }}">About</a></li>
                         <li><a href="{{ route('contact') }}">Contact</a></li> --}}
