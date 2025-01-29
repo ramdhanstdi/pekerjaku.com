@@ -27,6 +27,8 @@ Route::get('/login', [AuthController::class, 'loginPage'])->name('login')->middl
 Route::post('/login-post', [AuthController::class, 'loginPost'])->name('login.post')->middleware('web');
 Route::get('/registerasi', [AuthController::class, 'registerPage'])->name('registerasi');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/pembayaran/{id}', [AuthController::class, 'pembayaran'])->name('pembayaran');
+
 
 Route::get('/', [HomeController::class, 'index'])->name('/');
 

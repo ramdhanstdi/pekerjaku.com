@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('registrasi', [AuthController::class, 'registrasi']);
+Route::post('pembayaran/{id}', [AuthController::class, 'payAccount']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -55,4 +56,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
 });
+
+Route::post('lowongan/save', [LowonganController::class, 'save']);
 

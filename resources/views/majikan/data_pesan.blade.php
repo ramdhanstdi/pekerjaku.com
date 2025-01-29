@@ -32,7 +32,7 @@
                           </span>
                         </td>
                         <td>{{ $item->note }}</td><td>
-                          <a class="btn btn-success" href="http://wa.me/628872123111">Hubungi Admin</a>
+                          <a class="btn btn-success" href="https://wa.me/{{ env('WHATSAPP_CONTACT') }}">Hubungi Admin</a>
                         </td>
                     </tr>
                     @endforeach

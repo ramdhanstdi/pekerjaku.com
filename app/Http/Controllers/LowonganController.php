@@ -25,10 +25,7 @@ class LowonganController extends Controller
     public function index(){
         $lowongan = Lowongan::with('kategori')->get();
         $kategori = $this->kategoriService->getAlls();
-        $view1 = view('landingpage.lowongan', compact('lowongan'))->render();
-        $view2 = view('admin.lowongan.index', compact('lowongan'))->render();
-        $view3 = view('pekerja.lowongan', compact('kategori')) -> render();
-        return $view1 . $view2 . $view3;
+        return view('landingpage.lowongan', compact('kategori'))->render();
     }
 
     public function getAll(){   

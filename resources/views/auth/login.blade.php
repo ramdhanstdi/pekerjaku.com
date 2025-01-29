@@ -256,11 +256,11 @@
 
             <!-- Selection Form -->
             <div id="selection-form" class="selection">
-                <h2>Choose Account Type</h2>
-                <p>Select whether you are an Employer or a Worker to proceed.</p>
+                <h2>Pilih Account Type</h2>
+                <p>Pilih diantara Pemberi Kerja atau Pencari Pekerja.</p>
                 <div class="actions">
-                    <button class="btn" id="select-employer" value="2">Employer</button>
-                    <button class="btn" id="select-worker" value="3">Worker</button>
+                    <button class="btn" id="select-employer" value="2">Pemberi Kerja</button>
+                    <button class="btn" id="select-worker" value="3">Pencari Kerja</button>
                 </div>
             </div>
 
@@ -268,7 +268,7 @@
             <form id="register-form" class="form">
                 @csrf
                 <h2>Register</h2>
-                <p>Create your account and join us today!</p>
+                <p>Buat akunmu dan bergabung sekarang juga!</p>
                 <input type="hidden" class="level_user" id="level_user" name="level_user">
                 <div class="form-double-column">
                     <div class="input-group">
@@ -290,51 +290,51 @@
                 </div>
                 <div class="input-group">
                     <label for="register-address">Address</label>
-                    <textarea name="address" id="register-address" placeholder="Create a address" cols="30" rows="10"></textarea>
+                    <textarea name="address" id="register-address" placeholder="Enter a address" cols="30" rows="10"></textarea>
                 </div>
                 <div class="input-group">
                     <label for="register-password">District</label>
-                    <input type="text" name="district" id="register-district" placeholder="Create a district" required>
+                    <input type="text" name="district" id="register-district" placeholder="Enter a district" required>
                 </div>
                 <div class="input-group">
                     <label for="register-password">City</label>
-                    <input type="text" name="regency_city" id="register-city" placeholder="Create a city" required>
+                    <input type="text" name="regency_city" id="register-city" placeholder="Enter a city" required>
                 </div>
                 <div class="input-group">
                     <label for="register-password">Province</label>
-                    <input type="text" name="province" id="register-province" placeholder="Create a province" required>
+                    <input type="text" name="province" id="register-province" placeholder="Enter a province" required>
                 </div>
                 <div class="input-group">
                     <label for="register-password">Postal Code</label>
-                    <input type="text" name="postal_code" id="register-postal" placeholder="Create a poatal code" required>
+                    <input type="text" name="postal_code" id="register-postal" placeholder="Enter a poatal code" required>
                 </div>
                 <div class="input-group">
                     <label for="register-password">Phone Number</label>
-                    <input type="text" name="phone_number" id="register-phone" placeholder="Create a phone number" required>
+                    <input type="text" name="phone_number" id="register-phone" placeholder="Enter a phone number" required>
                 </div>
                 <div class="input-group">
                     <label for="register-password">WhatsApp Number</label>
-                    <input type="text" name="number_whatsapp" id="register-whatsaapp" placeholder="Create a phone number" required>
+                    <input type="text" name="number_whatsapp" id="register-whatsaapp" placeholder="Enter a phone number" required>
                 </div>
                 <div class="input-group">
                     <label for="register-password">Photo</label>
-                    <input type="file" name="image" id="register-whatsaapp" placeholder="Create a phone number" required>
+                    <input type="file" name="image" id="register-whatsaapp" placeholder="Enter a phone number" required>
                 </div>
                 <div class="input-group">
                     <label  name="ktp" for="register-password">KTP</label>
-                    <input type="file" name="ktp" id="register-whatsaapp" placeholder="Create a phone number" required>
+                    <input type="file" name="ktp" id="register-whatsaapp" placeholder="Enter a phone number" >
                 </div>
                 <div class="input-group">
                     <label name="selfiektp" for="register-password">Selfie KTP</label>
-                    <input type="file" name="selfiektp" id="register-whatsaapp" placeholder="Create a phone number" required>
+                    <input type="file" name="selfiektp" id="register-whatsaapp" placeholder="Enter a phone number" >
                 </div>
                 <div class="input-group">
                     <label  name="skck" for="register-password">SKCK</label>
-                    <input type="file" name="skck" id="register-whatsaapp" placeholder="Create a phone number" required>
+                    <input type="file" name="skck" id="register-whatsaapp" placeholder="Enter a phone number" >
                 </div>
                 <div class="input-group">
                     <label  name="ijazah" for="register-password">Ijazah</label>
-                    <input type="file" name="ijazah" id="register-whatsaapp" placeholder="Create a phone number" required>
+                    <input type="file" name="ijazah" id="register-whatsaapp" placeholder="Enter a phone number" >
                 </div>
                 <div class="actions">
                     <button type="submit" class="btn">Register</button>
@@ -446,7 +446,10 @@
             success: function(response) {
                 if (response.status) {
                     localStorage.setItem('auth_token', response.access_token);
-                    localStorage.setItem('user', JSON.stringify(response.data));
+                    localStorage.setItem('user', JSON.stringify(response.data));                    
+                    if(!response.data.buktibayar)
+                    window.location.href = `/pembayaran/${response.data.id}`;
+                    return;
                     if(response.data.level_user == 1)
                     window.location.href = '/admin/dashboard';
                     if(response.data.level_user == 2)
@@ -476,9 +479,9 @@
             data: formData, // Send FormData instead of serialized data
             contentType: false, // Let jQuery set the correct content type for FormData
             processData: false, // Prevent jQuery from processing the FormData
-            success: function(response) {
+            success: function(response) {                
                     if (response.status) {
-                        window.location.href = '/login';
+                        window.location.href = `/login`;
                     } else {
                         console.log('error', response);
                         showAlert(response?.message, 'warning');
@@ -486,6 +489,7 @@
                 },
             error: function(xhr, status, error) {
                 console.log(xhr.responseText);
+                showAlert(response?.message, 'warning');
             }
             });
         });

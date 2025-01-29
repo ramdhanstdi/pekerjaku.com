@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Service\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -94,4 +95,37 @@ class AuthController extends Controller
         // Redirect ke halaman login atau lainnya
         return redirect()->route('login')->with('success', 'You have been logged out.');
     }
+
+    public function pembayaran(){
+        return view('auth.pembayaran');
+    }
+
+    public function payAccount(Request $request, $id) {
+        $user = User::find($id);
+    
+        if ($user) {
+            if ($request->hasFile('buktibayar')) {
+                $file = $request->file('buktibayar');
+                $name = time() . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('buktibayars', $name, 'public');
+            }
+    
+            // Update user payment status
+            $user->update([
+                'pay' => 'berhasil',
+                'buktibayar' => $path ?? ''
+            ]);
+    
+            return response()->json([
+                'status' => true,
+                'message' => 'Pembayaran berhasil dikonfirmasi.'
+            ]);
+        }
+    
+        return response()->json([
+            'status' => false,
+            'message' => 'Akun tidak ditemukan.'
+        ]);
+    }
+    
 }

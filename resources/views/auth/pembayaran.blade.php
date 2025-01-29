@@ -1,92 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <div class="container">
-        <div class="form-container">
-            <!-- Login Form -->
-            <form id="payment-form" method="POST" action="#" class="form active">
-                @csrf
+@extends('tamplate.app')
 
-                <h2>Pembayaran</h2>
-                <p>Lakukan Pembayaran untuk menyelesaikan pendaftaran.</p>
-                <p> Rekening Tujuan </p>
-                <ul>
-                    <li>
-                        Bank: Bank Mega
-                    </li>
-                    <li>
-                        Nomor: 011840011000573
-                    </li>
-                    <li>
-                        Nama: PT Nasco International
-                    </li>
-                </ul>
-                <ul>
-                    <li>
-                        Bank: BCA
-                    </li>
-                    <li>
-                        Nomor: 6870731378
-                    </li>
-                    <li>
-                        Nama: Julia (komisaris)
-                    </li>
-                </ul>
-                <p>
-                    Tambahkan tiga angka terakhir nomor telepon Anda pada jumlah yang dibayar untuk memudahkan kami mengenalinya. Misalnya, nomor telepon Anda 0812-131-5100 dan Anda ingin membayar Rp 199.000, maka transferlah Rp 199.100.
-                </p>
-                <p>
-                    Upload Pembayaran anda kesini
-                </p>
-                <div class="input-group">
-                    <label for="pembayaran">Pembayaran</label>
-                    <input type="file" id="login-email" name="butibayar" placeholder="Bukti bayar" required>
+@section('content')
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Pembayaran</h4>
                 </div>
-                <div class="actions">
-                    <button type="submit" class="btn">Bayar</button>
+                <div class="card-body">
+                    <p class="text-center">Lakukan Pembayaran untuk menyelesaikan pendaftaran.</p>
+
+                    <h5 class="mt-3">Rekening Tujuan:</h5>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item">
+                            <strong>Bank:</strong> Bank Mega <br>
+                            <strong>Nomor:</strong> 011840011000573 <br>
+                            <strong>Nama:</strong> PT Nasco International
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Bank:</strong> BCA <br>
+                            <strong>Nomor:</strong> 6870731378 <br>
+                            <strong>Nama:</strong> Julia (Komisaris)
+                        </li>
+                    </ul>
+
+                    <p class="text-muted">
+                        Tambahkan tiga angka terakhir nomor telepon Anda pada jumlah yang dibayar untuk memudahkan kami mengenalinya.
+                        Misalnya, nomor telepon Anda 0812-131-5100 dan Anda ingin membayar Rp 199.000, maka transferlah Rp 199.100.
+                    </p>
+
+                    <form id="payment-form" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="buktibayar">Upload Bukti Pembayaran</label>
+                            <input type="file" id="buktibayar" name="buktibayar" class="form-control-file" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-block">Bayar</button>
+                    </form>
                 </div>
-                <p class="switch-form">
-                    Don't have an account? <a href="#" id="show-selection">Sign Up</a>
-                </p>
-            </form>
+            </div>
         </div>
     </div>
+</div>
 
-    <script src="{{ asset('./js/jquery-3.3.1.min.js') }}"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const paymentForm = document.getElementById('payment-form')
-        })
 
-        $('#payment-form').submit(function(e){
-        e.preventDefault();
-        console.log('submit');
-        const value = $('#payment-form').serialize();
+<script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('#payment-form').submit(function(e) {
+            e.preventDefault();
 
-        $.ajax({
-            url: '/api/login',
-            type: 'POST',
-            data: value,
-            success: function(response) {
-                console.log(response);
-                if (response.status) {
-                    window.location.href = '/';
-                } else {
-                    console.log('error',response)
-                    showAlert(response?.message, 'warning');
+            let userId = window.location.pathname.split('/').pop(); // Get ID from URL
+            let formData = new FormData(this); // Create FormData object
+
+            $.ajax({
+                url: `/api/pembayaran/${userId}`,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    if (response.status) {
+                        alert(response.message);
+                        window.location.href = '/';
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                    alert('Terjadi kesalahan, coba lagi.');
                 }
-            },
-            error: function(xhr, status, error) {
-                console.log(xhr.responseText);
-            }
-        })
-      });
-    </script>
-</body>
-</html>
+            });
+        });
+    });
+</script>
+@endsection
+

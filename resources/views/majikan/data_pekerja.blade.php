@@ -39,7 +39,7 @@
                         <td>{{ $item->note }}</td>
                         <td>
                           @if($item->status === 'pending')
-                              <a class="btn btn-warning" href="http://wa.me/{{$adminPhone ?? '6288213142134'}}">Hubungi Admin</a>
+                              <a class="btn btn-warning" href="https://wa.me/{{ env('WHATSAPP_CONTACT') }}">Hubungi Admin</a>
                               @elseif($item->status === 'bekerja')
                               <a class="btn btn-success" href="http://wa.me/{{$item->telpPekerja}}">Hubungi Pekerja</a>
                               

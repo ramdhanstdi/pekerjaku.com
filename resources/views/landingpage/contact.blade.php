@@ -1,14 +1,21 @@
 @extends('tamplate.app')
 
 @section('content')
-    <section class="contact">
-      <div class="container">
-        <h1>Contact</h1>
-
-        <div class="p-2">
-        </div>
-      </div>
-    </section>
+<div class="container">
+  <div class="text-center mb-4">
+    <h2>Hubungi Kami</h2>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8 text-center mb-4">
+      <p>
+        Jika Anda memiliki pertanyaan atau membutuhkan bantuan, jangan ragu untuk menghubungi kami melalui WhatsApp.
+      </p>
+      <a href="https://wa.me/{{ env('WHATSAPP_CONTACT') }}" class="btn btn-success">
+        Hubungi Admin via WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
 @endsection
 
 
