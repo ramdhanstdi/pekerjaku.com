@@ -9,7 +9,7 @@
                     <h4>Pembayaran</h4>
                 </div>
                 <div class="card-body">
-                    <p class="text-center">Lakukan Pembayaran untuk menyelesaikan pendaftaran.</p>
+                    <p class="text-center">Lakukan Pembayaran untuk menyelesaikan pendaftaran sebesar RP. 20.000.</p>
 
                     <h5 class="mt-3">Rekening Tujuan:</h5>
                     <ul class="list-group mb-3">
@@ -30,6 +30,11 @@
                         Misalnya, nomor telepon Anda 0812-131-5100 dan Anda ingin membayar Rp 199.000, maka transferlah Rp 199.100.
                     </p>
 
+                    <p class="text-danger">
+                        <strong>Perhatian:</strong> Pembayaran yang tidak sesuai dengan nominal yang ditentukan tidak akan diproses.
+                        Bila sudah melakukan pembayaran, harap menunggu konfirmasi dari admin.
+                    </p>
+
                     <form id="payment-form" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
@@ -48,13 +53,16 @@
 
 <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 <script>
+    window.whatsappContact = "{{ env('WHATSAPP_CONTACT') }}";
+</script>
+<script>
     $(document).ready(function () {
         $('#payment-form').submit(function(e) {
             e.preventDefault();
 
             let userId = window.location.pathname.split('/').pop(); // Get ID from URL
             let formData = new FormData(this); // Create FormData object
-
+            const whatsapp = window.whatsappContact;
             $.ajax({
                 url: `/api/pembayaran/${userId}`,
                 type: 'POST',
@@ -64,7 +72,7 @@
                 success: function(response) {
                     if (response.status) {
                         alert(response.message);
-                        window.location.href = '/';
+                        window.location.href = `https://wa.me/${whatsapp}?text=Halo%20Admin,%20saya%20sudah%20melakukan%20pembayaran%20dengan%20ID%20User%20Saya%20${userId}`;
                     } else {
                         alert(response.message);
                     }

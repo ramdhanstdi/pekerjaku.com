@@ -149,7 +149,9 @@ class AdminController extends Controller
         // Process each order to include fullNameMajikan and fullNamePekerja
         $orders = $orders->map(function ($order) {
             $order->fullNameMajikan = $order->user->first_name . ' ' . $order->user->last_name;
+            $order->paymentMajikan = $order->user->pay;
             $order->fullNamePekerja = $order->pekerja->user->first_name . ' ' . $order->pekerja->user->last_name;
+            $order->paymentPekerja = $order->pekerja->user->pay;
             $order->telpPekerja = $order->pekerja->user->number_whatsapp;
             $order->telpMajikan = $order->user->number_whatsapp;
             return $order;
@@ -198,5 +200,38 @@ class AdminController extends Controller
     
         return redirect()->route('admin.order')->with('error', 'Order not found!');
     }
+
+    // update user payment status
+    public function updateUserPaymentStatus(Request $request)
+    {
+        // Fetch user id from the request
+        $id = $request->input('id');
+        
+        // Ensure that the id is present in the request
+        if (!$id) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User ID is missing in the request.'
+            ]);
+        }
+    
+        // Fetch the user by ID
+        $user = User::where('id', $id)->update(['pay' => 'paid']);
+        
+        // Check if the user exists
+        if ($user) {
+        
+            return response()->json([
+                'status' => true,
+                'message' => 'Data berhasil diupdate'
+            ]);
+        }
+    
+        return response()->json([
+            'status' => false,
+            'message' => 'User not found'
+        ]);
+    }
+    
     
 }

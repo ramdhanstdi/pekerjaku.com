@@ -95,6 +95,7 @@
                                 <!-- User details will be dynamically loaded here -->
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -133,6 +134,9 @@
                             <td>
                                 <button class="btn btn-sm btn-info" onclick="viewDetail({{ $item->id }})">Detail</button>
                                 <button class="btn btn-sm btn-danger" onclick="deleteUser({{ $item->id }})">Delete</button>
+                                @if(!$item->pay)
+                                    <button  class="btn btn-sm btn-success" onclick="activationUser({{ $item->id }})">Aktifkan</button>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
@@ -279,6 +283,13 @@
                                             <td>:</td>
                                             <td>${user.level_user === 3 ? 'Pekerja' : 'Majikan'}</td>
                                         </tr>
+                                        <tr>
+                                            <td>Bukti Bayar</td>
+                                            <td>:</td>
+                                            <td class="d-flex justify-content-center mb-3">
+                                                <img src="${user.buktibayar ? '/storage/' + user.buktibayar : '/default-avatar.png'}" alt="Bukti Bayar" width="250">
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             `);
@@ -321,6 +332,37 @@
                 });
             }
         }
+
+        function activationUser(userId) {
+            if (confirm('Aktifkan akun ini?')) {
+                let token = localStorage.getItem('auth_token'); // Retrieve the stored token
+
+                $.ajax({
+                    url: `/api/admin/user/activation`, // Updated URL
+                    type: 'POST',
+                    data: {
+                        id: userId // Pass userId in the request body
+                    },
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Include token in headers
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Add CSRF token to headers (if needed)
+                    },
+                    success: function (response) {
+                        if (response.status) {
+                            alert(response.message);
+                            location.reload(); // Reload the page to update the table
+                        } else {
+                            alert('Error: ' + response.message); // Show error message if response status is false
+                        }
+                    },
+                    error: function (xhr) {
+                        console.error(xhr.responseText);
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            }
+        }
+
 
     </script>
     

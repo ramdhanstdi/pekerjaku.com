@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\KategoriController;
@@ -32,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('user/getOne', [UserController::class, 'getOne']);
         Route::post('user/save', [UserController::class, 'save']);
         Route::post('user/delete', [UserController::class, 'delete']);
+        Route::post('user/activation', [AdminController::class, 'updateUserPaymentStatus']);
 
         Route::get('pekerja/getAll', [PekerjaController::class, 'getAll']);
         Route::get('pekerja/getOne', [PekerjaController::class, 'getOne']);

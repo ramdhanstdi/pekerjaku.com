@@ -25,14 +25,20 @@
                             <td>{{ $item->id }}</td>
                             <td class="text-center">
                                 {{ $item->fullNamePekerja }}
-                                <a class="ms-2" href="https://wa.me/{{ $item->telpPekerja }}" target="_blank" class="btn btn-success btn-sm">
-                                    <i class="fa fa-phone"></i>
+                                @if(!$item->paymentPekerja)
+                                <span class="badge bg-danger text-white">Belum Dibayar</span>
+                                @endif
+                                <a class="ms-2 btn btn-success" href="https://wa.me/{{ $item->telpPekerja }}" target="_blank" class="btn btn-success btn-sm">
+                                    <i class="fa fa-phone"></i> Hubungi
                                 </a>
                             </td>
                             <td class="text-center">
                                 {{ $item->fullNameMajikan }}
-                                <a class="ms-2" href="https://wa.me/{{ $item->telpMajikan }}" target="_blank" class="btn btn-success btn-sm">
-                                    <i class="fa fa-phone"></i>
+                                @if(!$item->paymentMajikan)
+                                <span class="badge bg-danger text-white">Belum Dibayar</span>
+                                @endif
+                                <a class="ms-2 btn btn-success" href="https://wa.me/{{ $item->telpMajikan }}" target="_blank" class="btn btn-success btn-sm">
+                                    <i class="fa fa-phone"></i> Hubungi
                                 </a>
                             </td>
                             <td>

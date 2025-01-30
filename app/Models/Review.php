@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Review extends Model
 {
     use HasFactory;
 
@@ -14,12 +14,8 @@ class Order extends Model
         'user_id',
         'pekerja_id',
         'full_name',
-        'email',
-        'address',
-        'phone_number',
-        'status',
-        'note',
-        'reviews_id'
+        'star',
+        'comment',
     ];
 
     public function user()

@@ -4,7 +4,7 @@
 <section class="dashboard">
   <div class="container">
     <h2>Data Pekerja</h2>
-
+    <a href="/pekerja" class="btn btn-success my-4">Cari Pekerja Baru</a>
       <!-- Search Form -->
     <form method="GET" action="{{ route('majikan.data_pekerja') }}" class="mb-3">
         <input type="text" name="search" class="form-control" placeholder="Cari pekerja atau nomor telepon..." value="{{ request('search') }}">

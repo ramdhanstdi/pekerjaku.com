@@ -36,6 +36,7 @@ Route::middleware(['auth.login'])->prefix('pekerja')->group(function () {
     Route::get('dashboard', [PekerjaController::class, 'dashboard'])->name('pekerja.dashboard');
     Route::get('data_diri', [PekerjaController::class, 'dataDiri'])->name('pekerja.data_diri');
     Route::get('lowongan', [PekerjaController::class, 'lowongan'])->name('pekerja.lowongan');
+    Route::post('review/{id}', [PekerjaController::class, 'updateReview'])->name('pekerja.review');
 });
 
 Route::get('lowongan', [LowonganController::class, 'index'])->name('lowongan');
@@ -58,6 +59,7 @@ Route::middleware(['auth.login'])->prefix('admin')->group(function(){
     Route::get('order', [AdminController::class, 'order'])->name('admin.order');
     Route::post('/reject-order/{id}', [AdminController::class, 'rejectOrder'])->name('reject.order');
     Route::post('/confirm-order/{id}', [AdminController::class, 'confirmOrder'])->name('confirm.order');
+    Route::post('/user/update-payment/{id}', [AdminController::class, 'updateUserPaymentStatus']);
 });
 
 Route::get('/pekerja', [PekerjaController::class, 'index'])->name('pekerja');
@@ -70,5 +72,7 @@ Route::get('/lowongan', [LowonganController::class, 'index'])->name('lowongan');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+
 
 

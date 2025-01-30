@@ -446,10 +446,10 @@
             success: function(response) {
                 if (response.status) {
                     localStorage.setItem('auth_token', response.access_token);
-                    localStorage.setItem('user', JSON.stringify(response.data));                    
-                    if(!response.data.buktibayar)
+                    localStorage.setItem('user', JSON.stringify(response.data));
+                    if(!response.data.pay){
                     window.location.href = `/pembayaran/${response.data.id}`;
-                    return;
+                    return;}
                     if(response.data.level_user == 1)
                     window.location.href = '/admin/dashboard';
                     if(response.data.level_user == 2)

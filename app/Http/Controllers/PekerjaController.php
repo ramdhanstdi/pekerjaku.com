@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Pekerja;
+use App\Models\Review;
 use App\Service\KategoriService;
 use App\Service\PekerjaService;
 use App\Service\UserService;
@@ -124,32 +125,43 @@ class PekerjaController extends Controller
         $validated = $request->validate([
             'note' => 'nullable|string|max:255',
         ]);
-
+    
         $pekerja = $this->pekerjaService->getOneByUserId($pekerjaId);
-      
         $userPekerja = User::where('id', $pekerjaId)->first();
-        $name = $userPekerja->first_name.' '.$userPekerja->last_name;
+        $name = $userPekerja->first_name . ' ' . $userPekerja->last_name;
+        // Create a new review entry linked to the order
+        $review = Review::create([
+            'user_id' => auth()->user()->id,
+            'full_name' => auth()->user()->first_name . ' ' . auth()->user()->last_name,
+            'pekerja_id' => $pekerja->getData()->data->id,
+            'star' => 0, // Default null, to be updated later
+            'rating' => null, // Default null, to be updated later
+            'comment' => null, // Default null, to be updated later
+        ]);
+    
         // Prepare data for the order
         $data = [
             'pekerja_id' => $pekerja->getData()->data->id,
             'user_id' => auth()->user()->id,
-            'full_name' => auth()->user()->first_name.auth()->user()->last_name,
+            'full_name' => auth()->user()->first_name . ' ' . auth()->user()->last_name,
             'email' => auth()->user()->email,
             'address' => auth()->user()->address,
             'phone_number' => auth()->user()->phone_number,
             'status' => 'pending', // Default status
-            'note' =>  'Menunggu konfirmasi Admin', // Default note
+            'note' => 'Menunggu konfirmasi Admin', // Default note
+            'reviews_id' => $review->id, // Default note
         ];
-
+    
         // Place the order using the service
         $order = $this->orderService->placeOrder($data);
-
+    
         // Redirect to WhatsApp with a message
         $message = urlencode("Saya ingin memesan pekerja dengan nama {$name} dengan ID Order {$order->id}");
-        $whatsAppUrl = "https://wa.me/62895334930931?text=$message";
-
+        $whatsAppUrl = "https://wa.me/" . env('WHATSAPP_CONTACT') . "?text=$message";
+    
         return redirect($whatsAppUrl);
     }
+    
 
 
     public function getAll(){
@@ -175,4 +187,25 @@ class PekerjaController extends Controller
     public function delete(){
         return $this->pekerjaService->delete();
     }
+
+    public function updateReview(Request $request, $id)
+    {
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'review' => 'required|string|max:500',
+        ]);
+    
+        // Find the existing review
+        $review = Review::findOrFail($id);
+    
+        // Update review
+        $review->update([
+            'star' => $request->rating,
+            'comment' => $request->review,
+        ]);
+    
+        return redirect('/majikan/data-order')->with('success', 'Review updated successfully.');
+    }
+    
+
 }
