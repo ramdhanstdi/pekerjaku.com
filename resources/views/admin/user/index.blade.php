@@ -312,8 +312,11 @@
                 let token = localStorage.getItem('auth_token'); // Retrieve the stored token
 
                 $.ajax({
-                    url: `/api/user/delete/${userId}`,
-                    type: 'DELETE',
+                    url: `/api/admin/user/delete`,
+                    type: 'POST',
+                    data: {
+                        id: userId // Pass userId in the request body
+                    },
                     headers: {
                         'Authorization': `Bearer ${token}`, // Include token
                     },

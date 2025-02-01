@@ -8,7 +8,7 @@
                   </div>
                   <ul>
                       <li>Address: 60-49 Road 11378 New York</li>
-                      <li>Phone: +65 11.188.888</li>
+                      <li>Phone: {{ env('WHATSAPP_CONTACT') }}</li>
                       <li>Email: hello@colorlib.com</li>
                   </ul>
               </div>
@@ -35,7 +35,7 @@
               </div>
           </div>
           <div class="col-lg-4 col-md-12">
-              <div class="footer__widget">
+              {{-- <div class="footer__widget">
                   <h6>Join Our Newsletter Now</h6>
                   <p>Get E-mail updates about our latest shop and special offers.</p>
                   <form action="#">
@@ -48,7 +48,7 @@
                       <a href="#"><i class="fa fa-twitter"></i></a>
                       <a href="#"><i class="fa fa-pinterest"></i></a>
                   </div>
-              </div>
+              </div> --}}
           </div>
       </div>
       <div class="row">

@@ -447,7 +447,7 @@
                 if (response.status) {
                     localStorage.setItem('auth_token', response.access_token);
                     localStorage.setItem('user', JSON.stringify(response.data));
-                    if(!response.data.pay){
+                    if(!response.data.pay && response.data.level_user != 1){
                     window.location.href = `/pembayaran/${response.data.id}`;
                     return;}
                     if(response.data.level_user == 1)
