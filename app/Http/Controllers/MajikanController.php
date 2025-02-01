@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Pekerja;
-
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class MajikanController extends Controller
@@ -158,6 +158,29 @@ class MajikanController extends Controller
         }
     
         return redirect()->route('majikan.data_pekerja')->with('error', 'Data pekerja tidak ditemukan.');
+    }
+
+    public function updateReview(Request $request, $id)
+    {
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'review' => 'required|string|max:500',
+        ]);
+    
+        // Find the existing review
+        $review = Review::findOrFail($id);
+
+        Order::where('reviews_id', $id)->update([
+            'note' => 'Pekerja telah selesai bekerja dan di review oleh majikan.',
+        ]);
+    
+        // Update review
+        $review->update([
+            'star' => $request->rating,
+            'comment' => $request->review,
+        ]);
+    
+        return redirect('majikan/data-order')->with('success', 'Review updated successfully.');
     }
     
     

@@ -77,13 +77,18 @@
           <div class="col-lg-6 col-md-6">
               <div class="product__details__text">
                   <h3>{{ $data->user->first_name }} {{ $data->user->last_name }}</h3>
+                  
                   <div class="product__details__rating">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star-half-o"></i>
-                      <span>(18 reviews)</span>
+                    @for ($i = 1; $i <= 5; $i++)
+                        @if ($i <= floor($avgStar))
+                            <i class="fa fa-star"></i>
+                        @elseif ($i - $avgStar < 1)
+                            <i class="fa fa-star-half-o"></i>
+                        @else
+                            <i class="fa fa-star-o "></i>
+                        @endif
+                    @endfor
+                        <span>({{$reviews->count()}} reviews)</span>
                   </div>
                   <div class="product__details__price">RP. {{ number_format($data->salary,0,',','.') }}</div>
                   <p><?php echo $data->description ?? ''; ?></p>
@@ -128,7 +133,7 @@
                       </li>
                       <li class="nav-item">
                           <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                              aria-selected="false">Reviews <span>(1)</span></a>
+                              aria-selected="false">Reviews <span>({{$reviews->count()}})</span></a>
                       </li>
                   </ul>
                   <div class="tab-content">
@@ -139,20 +144,30 @@
                           </div>
                       </div>
                       <div class="tab-pane" id="tabs-3" role="tabpanel">
-                          <div class="product__details__tab__desc">
-                              <h6>Products Infomation</h6>
-                              <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                  Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
-                                  Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
-                                  sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
-                                  eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
-                                  Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
-                                  sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
-                                  diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                                  ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                                  Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                                  Proin eget tortor risus.</p>
-                          </div>
+                        @if ($reviews->isNotEmpty())
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 product__details__text">
+                                @foreach ($reviews as $review)
+                                    <div class="bg-white shadow-sm rounded-xl p-4 my-2">
+                                        <div class="flex items-center mb-2 product__details__rating">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= floor($review->star))
+                                                    <i class="fa fa-star"></i>
+                                                @elseif ($i - $review->star < 1)
+                                                    <i class="fa fa-star-half-o"></i>
+                                                @else
+                                                    <i class="fa fa-star-o "></i>
+                                                @endif
+                                            @endfor
+                                        </div>
+                                        <p class="text-sm my-2" style="font-weight: 600">{{ $review->user->first_name.' '.$review->user->last_name }}</p>
+                                        <p class="text-sm my-2">Rating: {{ $review->star }}/5</p>
+                                        <p class="text-lg mb-2">{{ $review->comment }}</p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else 
+                            <p>Belum ada review</p> 
+                        @endif
                       </div>
                   </div>
               </div>
@@ -168,7 +183,7 @@
       <div class="row">
           <div class="col-lg-12">
               <div class="section-title related__product__title">
-                  <h2>Pekerjaan</h2>
+                  <h2>Pekerja</h2>
               </div>
           </div>
       </div>

@@ -36,7 +36,6 @@ Route::middleware(['auth.login'])->prefix('pekerja')->group(function () {
     Route::get('dashboard', [PekerjaController::class, 'dashboard'])->name('pekerja.dashboard');
     Route::get('data_diri', [PekerjaController::class, 'dataDiri'])->name('pekerja.data_diri');
     Route::get('lowongan', [PekerjaController::class, 'lowongan'])->name('pekerja.lowongan');
-    Route::post('review/{id}', [PekerjaController::class, 'updateReview'])->name('pekerja.review');
 });
 
 Route::get('lowongan', [LowonganController::class, 'index'])->name('lowongan');
@@ -49,6 +48,7 @@ Route::middleware(['auth.login'])->prefix('majikan')->group(function () {
     Route::post('data-diri', [MajikanController::class, 'save'])->name('majikan.save');
     Route::get('data-order', [MajikanController::class, 'dataOrder'])->name('majikan.order');
     Route::put('berhenti/{id}', [MajikanController::class, 'stopPekerja'])->name('majikan.berhenti');
+    Route::post('review/{id}', [MajikanController::class, 'updateReview'])->name('majikan.review');
 });
 
 Route::middleware(['auth.login'])->prefix('admin')->group(function(){

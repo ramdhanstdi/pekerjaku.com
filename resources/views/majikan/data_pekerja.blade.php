@@ -6,10 +6,10 @@
     <h2>Data Pekerja</h2>
     <a href="/pekerja" class="btn btn-success my-4">Cari Pekerja Baru</a>
       <!-- Search Form -->
-    <form method="GET" action="{{ route('majikan.data_pekerja') }}" class="mb-3">
+    {{-- <form method="GET" action="{{ route('majikan.data_pekerja') }}" class="mb-3">
         <input type="text" name="search" class="form-control" placeholder="Cari pekerja atau nomor telepon..." value="{{ request('search') }}">
         <button type="submit" class="btn btn-primary mt-2">Search</button>
-    </form>
+    </form> --}}
     <div class="p-2">
         {{-- <button class="btn btn-md btn-primary">ADD PEKERJA</button> --}}
         <div class="py-2">
@@ -87,11 +87,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('./js/jquery-3.3.1.min.js') }}"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function() {
+      $('#example').DataTable();
+  });
+</script>
 
 @endsection
-
-@push('script')
-<script>
-    new DataTable('#example');
-</script>
-@endpush

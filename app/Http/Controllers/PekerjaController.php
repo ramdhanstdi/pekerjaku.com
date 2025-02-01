@@ -77,8 +77,12 @@ class PekerjaController extends Controller
         // Get total count before pagination
         $totalPekerjaCount = $pekerjaQuery->count();
     
-        // Apply sorting and paginate results
-        $pekerja = $pekerjaQuery->orderBy($sortBy, $sortOrder)->paginate($perPage);
+        // Apply sorting and paginate results, including reviews
+        $pekerja = $pekerjaQuery
+        ->with('reviews')  // Eager load reviews
+        ->orderBy($sortBy, $sortOrder)
+        ->paginate($perPage);
+
     
         // Fetch the latest 5 records
         $pekerjaBaru = Pekerja::whereHas('user', function ($query) {
@@ -112,12 +116,21 @@ class PekerjaController extends Controller
         return view('pekerja.data_diri', compact('kategori', 'dataDiri'));
     }
 
-    public function detailPekerja($id){
+    public function detailPekerja($id)
+    {
+        // Get the pekerja with related reviews
         $data = $this->pekerjaService->getOnes($id);
-        $p = $this->pekerjaService->getALls()->where('id','!=', 1);
+        $reviews = $data->reviews()->with('user')->get()->where('comment', '!=', null); // Fetch reviews with comments
+        $avgStar = $reviews->avg('star'); // Calculate average star rating
+    
+        // Fetch other pekerja excluding the current one
+        $p = $this->pekerjaService->getAlls()->where('id', '!=', $id);
         $pekerja = collect($p)->take(4);
-        return view('landingpage.detail', compact('data','pekerja'));
+    
+        // Return view with data and reviews
+        return view('landingpage.detail', compact('data', 'pekerja', 'reviews' ,'avgStar'));
     }
+    
 
     public function placeOrder(Request $request, $pekerjaId)
     {
@@ -187,25 +200,4 @@ class PekerjaController extends Controller
     public function delete(){
         return $this->pekerjaService->delete();
     }
-
-    public function updateReview(Request $request, $id)
-    {
-        $request->validate([
-            'rating' => 'required|integer|min:1|max:5',
-            'review' => 'required|string|max:500',
-        ]);
-    
-        // Find the existing review
-        $review = Review::findOrFail($id);
-    
-        // Update review
-        $review->update([
-            'star' => $request->rating,
-            'comment' => $request->review,
-        ]);
-    
-        return redirect('/majikan/data-order')->with('success', 'Review updated successfully.');
-    }
-    
-
 }

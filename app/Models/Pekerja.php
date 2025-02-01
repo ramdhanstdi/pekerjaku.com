@@ -47,4 +47,11 @@ class Pekerja extends Model
     public function kategori(){
         return $this->belongsTo('App\Models\Kategori', 'kategori_id');
     }
+
+    // In Pekerja.php (Model)
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'pekerja_id');
+    }
+
 }
