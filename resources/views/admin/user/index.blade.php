@@ -111,6 +111,7 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Nama</th>
                             <th>Email</th>
                             <th>Role</th>
@@ -126,6 +127,7 @@
                     <tbody>
                         @foreach ($users as $item)
                         <tr>
+                            <td>{{ $item->id }}</td>
                             <td>{{ $item->first_name }} {{ $item->last_name }}</td>
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->level_user == 3 ? 'Pekerja' : 'Majikan' }}</td>
@@ -146,37 +148,7 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
-        
-            <!-- Pagination -->
-            {{-- <div class="product__pagination">
-                @if ($users->onFirstPage())
-                    <span class="disabled">1</span>
-                @else
-                    <a href="{{ $users->previousPageUrl() }}">&laquo;</a>
-                @endif
-            
-                @foreach ($users->links()->elements as $element)
-                    @if (is_string($element))
-                        <span class="disabled">{{ $element }}</span>
-                    @endif
-            
-                    @if (is_array($element))
-                        @foreach ($element as $page => $url)
-                            @if ($page == $users->currentPage())
-                                <a href="#" class="bg-info text-white">{{ $page }}</a>
-                            @else
-                                <a href="{{ $url }}">{{ $page }}</a>
-                            @endif
-                        @endforeach
-                    @endif
-                @endforeach
-            
-                @if ($users->hasMorePages())
-                    <a href="{{ $users->nextPageUrl() }}">&raquo;</a>
-                @endif
-            </div> --}}
-            
+            </div>        
         </div>
         </div>
       </div>
@@ -302,12 +274,30 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>SELFIE KTP</td>
+                                            <td>Selfie KTP</td>
                                             <td>:</td>
                                             <td class="d-flex justify-content-center mb-3">
                                                 <img src="${user.selfiektp ? '/storage/' + user.selfiektp : ''}" alt="Foto Selfie KTP" width="250">
                                             </td>
                                         </tr>
+                                        ${user.level_user == 3 ? `
+                                            <tr>
+                                                <td>SKCK</td>
+                                                <td>:</td>
+                                                <td class="d-flex justify-content-center mb-3">
+                                                    <img src="${user.skck ? '/storage/' + user.skck : ''}" alt="Foto SKCK" width="250">
+                                                </td>
+                                            </tr>
+                                        ` : ''}
+                                        ${user.level_user == 3 ? `
+                                            <tr>
+                                                <td>Ijazah</td>
+                                                <td>:</td>
+                                                <td class="d-flex justify-content-center mb-3">
+                                                    <img src="${user.ijazah ? '/storage/' + user.ijazah : ''}" alt="Foto Ijazah" width="250">
+                                                </td>
+                                            </tr>
+                                        ` : ''}
                                     </tbody>
                                 </table>
                             `);

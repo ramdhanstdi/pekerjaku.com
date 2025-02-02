@@ -121,8 +121,8 @@
                             if (xhr.status === 401) {
                             alert('Session expired. Please log in again.');
                             window.location.href = '/login';
-                            window.location.reload()
-                        }
+                            }
+                            window.location.reload();
                         } else {
                             console.log('error', response);
                             showAlert(response?.message, 'warning');

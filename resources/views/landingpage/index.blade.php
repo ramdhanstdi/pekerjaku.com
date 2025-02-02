@@ -101,8 +101,9 @@
                 </div>
                 <div class="featured__controls">
                     <ul>
+                        <li data-category="all" class="active">All</li> <!-- For showing all workers -->
                         @foreach ($kategori as $item)
-                            <li data-filter={{$item->name}}>{{ $item->name }}</li>
+                            <li data-category="{{ $item->id }}">{{ $item->name }}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -110,7 +111,7 @@
         </div>
         <div class="row featured__filter">
             @foreach ($pekerja as $item)
-                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+                <div class="col-lg-3 col-md-4 col-sm-6 mix" data-category="{{ $item->kategori_id }}">
                     <div class="featured__item">
                         <div class="featured__item__pic set-bg" data-setbg="{{ Storage::url($item->user->image) }}">
                             <ul class="featured__item__pic__hover">
