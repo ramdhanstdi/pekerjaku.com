@@ -35,7 +35,7 @@
                         <td>{{ $item->note }}</td>
                         <td>
                           @if ($item->status === 'selesai' && strpos($item->note, 'review') === false)
-                              <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#reviewModal{{ $item->id }}">
+                              <button class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#reviewModal{{ $item->id }}">
                                   Nilai Pekerja
                               </button>
                           @else

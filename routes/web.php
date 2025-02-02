@@ -36,6 +36,7 @@ Route::middleware(['auth.login'])->prefix('pekerja')->group(function () {
     Route::get('dashboard', [PekerjaController::class, 'dashboard'])->name('pekerja.dashboard');
     Route::get('data_diri', [PekerjaController::class, 'dataDiri'])->name('pekerja.data_diri');
     Route::get('lowongan', [PekerjaController::class, 'lowongan'])->name('pekerja.lowongan');
+    Route::get('order', [PekerjaController::class, 'dataOrder'])->name('pekerja.order');
 });
 
 Route::get('lowongan', [LowonganController::class, 'index'])->name('lowongan');

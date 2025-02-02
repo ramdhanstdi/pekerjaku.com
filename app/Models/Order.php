@@ -31,4 +31,9 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\Pekerja', 'pekerja_id'); // The hired worker
     }
+
+    public function review()
+    {
+        return $this->belongsTo(Review::class, 'reviews_id');
+    }
 }

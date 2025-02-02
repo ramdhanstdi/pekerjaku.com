@@ -41,10 +41,10 @@
                           @if($item->status === 'pending')
                               <a class="btn btn-warning" href="https://wa.me/{{ env('WHATSAPP_CONTACT') }}">Hubungi Admin</a>
                               @elseif($item->status === 'bekerja')
-                              <a class="btn btn-success" href="http://wa.me/{{$item->telpPekerja}}">Hubungi Pekerja</a>
+                              <a class="btn btn-success w-100" href="http://wa.me/{{$item->telpPekerja}}">Hubungi Pekerja</a>
                               
                               <!-- Button to trigger the modal -->
-                              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmStopModal{{$item->id}}">
+                              <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#confirmStopModal{{$item->id}}">
                                   Berhentikan Pekerja
                               </button>
                           

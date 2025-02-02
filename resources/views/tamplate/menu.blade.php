@@ -5,22 +5,17 @@
         <a href="#"><img src="./../img/logo-pekerja.jpg" alt=""></a>
     </div>
     <div class="humberger__menu__cart">
-        <ul>
-            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-        </ul>
-        <div class="header__cart__price">item: <span>$150.00</span></div>
+        @if (auth()->user() && auth()->user()->level_user == 1)
+            <a href="{{ route('admin.dashboard') }}" style="cursor: pointer" class="btn btn-secondary text-white">Pergi ke Dashboard</a>
+        @elseif (auth()->user() && auth()->user()->level_user == 2)
+            <a href="{{ route('majikan.dashboard') }}" style="cursor: pointer" class="btn btn-secondary text-white">Pergi ke Dashboard</a>
+        @elseif (auth()->user() && auth()->user()->level_user == 3)
+            <a href="{{ route('pekerja.dashboard') }}" style="cursor: pointer" class="btn btn-secondary text-white">Pergi ke Dashboard</a>
+        @else
+            <span style="cursor: not-allowed; color: gray;">No Dashboard Available</span>
+        @endif
     </div>
     <div class="humberger__menu__widget">
-        <div class="header__top__right__language">
-            <img src="img/language.png" alt="">
-            <div>English</div>
-            <span class="arrow_carrot-down"></span>
-            <ul>
-                <li><a href="#">Spanis</a></li>
-                <li><a href="#">English</a></li>
-            </ul>
-        </div>
         <div class="header__top__right__auth">
             @if(Auth::check())
                 <!-- User sudah login -->
@@ -45,15 +40,9 @@
         </ul>
     </nav>
     <div id="mobile-menu-wrap"></div>
-    <div class="header__top__right__social">
-        <a href="#"><i class="fa fa-facebook"></i></a>
-        <a href="#"><i class="fa fa-twitter"></i></a>
-        <a href="#"><i class="fa fa-linkedin"></i></a>
-        <a href="#"><i class="fa fa-pinterest-p"></i></a>
-    </div>
     <div class="humberger__menu__contact">
         <ul>
-            <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+            <li><i class="fa fa-envelope"></i> {{auth()->user()->email ?? ''}}</li>
             <li>Pekerjaku Portal Pencari Kerja No 1</li>
         </ul>
     </div>
@@ -77,11 +66,11 @@
                     <div class="header__top__right">
                         <div class="header__top__right__social">
                             @if (auth()->user() && auth()->user()->level_user == 1)
-                                <a href="{{ route('admin.dashboard') }}" style="cursor: pointer">Pergi ke Dashboard</a>
+                                <a href="{{ route('admin.dashboard') }}" style="cursor: pointer" class="btn btn-secondary text-white">Pergi ke Dashboard</a>
                             @elseif (auth()->user() && auth()->user()->level_user == 2)
-                                <a href="{{ route('majikan.dashboard') }}" style="cursor: pointer">Pergi ke Dashboard</a>
+                                <a href="{{ route('majikan.dashboard') }}" style="cursor: pointer" class="btn btn-secondary text-white">Pergi ke Dashboard</a>
                             @elseif (auth()->user() && auth()->user()->level_user == 3)
-                                <a href="{{ route('pekerja.dashboard') }}" style="cursor: pointer">Pergi ke Dashboard</a>
+                                <a href="{{ route('pekerja.dashboard') }}" style="cursor: pointer" class="btn btn-secondary text-white">Pergi ke Dashboard</a>
                             @else
                                 <span style="cursor: not-allowed; color: gray;">No Dashboard Available</span>
                             @endif

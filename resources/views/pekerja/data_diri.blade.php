@@ -3,12 +3,12 @@
 @section('content')
     <section class="data diri">
       <div class="container">
-        <h1>Data Diri</h1>
+        <h2 class="my-2">Data Diri</h2>
         <div class="row mb-5">
-          <div class="col">
+          <div class="col-lg-3 col-md-6 p-2">
             <img src="{{Storage::url(auth()->user()->image)}}" width="250" alt="">
           </div>
-          <div class="col-9 p-2">
+          <div class="col-lg-9 col-md-6 p-2">
             <form id="formDataDiri">
               <div class="row">
                 <div class="col form-group">

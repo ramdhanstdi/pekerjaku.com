@@ -12,7 +12,7 @@
                     </div>
                     @foreach ($kategori as $item)
                         <ul>
-                            <li><a href="#">{{ $item->name }}</a></li>
+                            <li><a href="/pekerja?category_id={{ $item->id }}">{{ $item->name }}</a></li>
                         </ul>
                     @endforeach
                 </div>
