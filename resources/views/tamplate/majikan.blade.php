@@ -1,3 +1,13 @@
+@if(auth()->check() && auth()->user()->level_user == 1)
+    <script>
+        window.location.href = "/admin/dashboard";
+    </script>
+
+@elseif(auth()->check() && auth()->user()->level_user == 3)
+    <script>
+        window.location.href = "/pekerja/dashboard";";
+    </script>
+@endif
 @include('tamplate.header')
 
 @include('tamplate.menu_majikan')

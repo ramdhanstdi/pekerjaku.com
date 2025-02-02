@@ -13,7 +13,9 @@
                     <thead>
                         <tr>
                             <th>ID Order</th>
+                            <th>ID Pekerja</th>
                             <th>Pekerja</th>
+                            <th>ID Majikan</th>
                             <th>Majikan</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -23,19 +25,21 @@
                         @foreach ($orders as $item)
                         <tr>
                             <td>{{ $item->id }}</td>
+                            <td>{{ $item->pekerjaId }}</td>
                             <td class="text-center">
                                 {{ $item->fullNamePekerja }}
                                 @if(!$item->paymentPekerja)
-                                <span class="badge bg-danger text-white">Belum Dibayar</span>
+                                <span class="badge bg-danger text-white" style="padding: 13px">Belum bayar</span>
                                 @endif
                                 <a class="ms-2 btn btn-success" href="https://wa.me/{{ $item->telpPekerja }}" target="_blank" class="btn btn-success btn-sm">
                                     <i class="fa fa-phone"></i> Hubungi
                                 </a>
                             </td>
+                            <td>{{ $item->majikanId }}</td>
                             <td class="text-center">
                                 {{ $item->fullNameMajikan }}
                                 @if(!$item->paymentMajikan)
-                                <span class="badge bg-danger text-white">Belum Dibayar</span>
+                                <span class="badge bg-danger text-white" style="padding: 13px">Belum bayar</span>
                                 @endif
                                 <a class="ms-2 btn btn-success" href="https://wa.me/{{ $item->telpMajikan }}" target="_blank" class="btn btn-success btn-sm">
                                     <i class="fa fa-phone"></i> Hubungi
@@ -55,7 +59,7 @@
                             <td>
                                 @if ($item->status === 'pending')
                                     <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#phoneModal{{ $item->id }}">
-                                        Details
+                                        <i class="fa fa-check"></i> Konfirmasi
                                     </button>
                                 @endif
                             </td>
@@ -80,12 +84,12 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <form method="POST" action="{{ route('reject.order', $item->id) }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-danger">Reject</button>
+                                    <button type="submit" class="btn btn-danger">Tolak</button>
                                 </form>
                                 
                                 <form method="POST" action="{{ route('confirm.order', $item->id) }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-success">Continue</button>
+                                    <button type="submit" class="btn btn-success">Setuju</button>
                                 </form>
                             </div>
                         </div>

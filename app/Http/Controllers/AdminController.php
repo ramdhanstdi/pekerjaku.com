@@ -149,8 +149,10 @@ class AdminController extends Controller
         // Process each order to include fullNameMajikan and fullNamePekerja
         $orders = $orders->map(function ($order) {
             $order->fullNameMajikan = $order->user->first_name . ' ' . $order->user->last_name;
+            $order->majikanId = $order->user->id;
             $order->paymentMajikan = $order->user->pay;
             $order->fullNamePekerja = $order->pekerja->user->first_name . ' ' . $order->pekerja->user->last_name;
+            $order->pekerjaId = $order->pekerja->user->id;
             $order->paymentPekerja = $order->pekerja->user->pay;
             $order->telpPekerja = $order->pekerja->user->number_whatsapp;
             $order->telpMajikan = $order->user->number_whatsapp;

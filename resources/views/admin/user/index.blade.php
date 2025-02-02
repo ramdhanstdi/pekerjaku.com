@@ -113,11 +113,13 @@
                         <tr>
                             <th>Nama</th>
                             <th>Email</th>
+                            <th>Role</th>
                             <th>Alamat</th>
                             <th>Kecamatan</th>
                             <th>Kabupaten/Kota</th>
                             <th>Province</th>
                             <th>No Telepon</th>
+                            <th>Bayar Pembayaran</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -126,16 +128,18 @@
                         <tr>
                             <td>{{ $item->first_name }} {{ $item->last_name }}</td>
                             <td>{{ $item->email }}</td>
+                            <td>{{ $item->level_user == 3 ? 'Pekerja' : 'Majikan' }}</td>
                             <td>{{ $item->address }}</td>
                             <td>{{ $item->district }}</td>
                             <td>{{ $item->regency_city }}</td>
                             <td>{{ $item->province }}</td>
                             <td>{{ $item->phone_number }}</td>
+                            <td>{{ $item->buktibayar ? 'Sudah Bayar' : 'Belum Bayar' }}</td>
                             <td>
-                                <button class="btn btn-sm btn-info" onclick="viewDetail({{ $item->id }})">Detail</button>
-                                <button class="btn btn-sm btn-danger" onclick="deleteUser({{ $item->id }})">Delete</button>
+                                <button class="btn btn-sm btn-info w-100" onclick="viewDetail({{ $item->id }})">Detail</button>
+                                <button class="btn btn-sm btn-danger my-1 w-100" onclick="deleteUser({{ $item->id }})">Delete</button>
                                 @if(!$item->pay)
-                                    <button  class="btn btn-sm btn-success" onclick="activationUser({{ $item->id }})">Aktifkan</button>
+                                    <button  class="btn btn-sm btn-success w-100" onclick="activationUser({{ $item->id }})">Aktifkan</button>
                                 @endif
                             </td>
                         </tr>
@@ -287,7 +291,21 @@
                                             <td>Bukti Bayar</td>
                                             <td>:</td>
                                             <td class="d-flex justify-content-center mb-3">
-                                                <img src="${user.buktibayar ? '/storage/' + user.buktibayar : '/default-avatar.png'}" alt="Bukti Bayar" width="250">
+                                                <img src="${user.buktibayar ? '/storage/' + user.buktibayar : '/storage/belum_bayar.png'}" alt="Bukti Bayar" width="250">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>KTP</td>
+                                            <td>:</td>
+                                            <td class="d-flex justify-content-center mb-3">
+                                                <img src="${user.ktp ? '/storage/' + user.ktp : ''}" alt="Foto KTP" width="250">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>SELFIE KTP</td>
+                                            <td>:</td>
+                                            <td class="d-flex justify-content-center mb-3">
+                                                <img src="${user.selfiektp ? '/storage/' + user.selfiektp : ''}" alt="Foto Selfie KTP" width="250">
                                             </td>
                                         </tr>
                                     </tbody>
