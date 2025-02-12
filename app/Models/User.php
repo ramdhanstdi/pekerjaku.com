@@ -36,6 +36,7 @@ class User extends Authenticatable
         'skck',
         'buktibayar',
         'level_user',
+        'payment_code',
     ];
 
     /**

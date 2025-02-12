@@ -107,10 +107,11 @@
                 </div>
             </form> --}}
         
-            <div class="py-2">
+            <div class="py-2 overflow-auto">
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
+                            <th>Payment Code</th>
                             <th>ID</th>
                             <th>Nama</th>
                             <th>Email</th>
@@ -127,6 +128,7 @@
                     <tbody>
                         @foreach ($users as $item)
                         <tr>
+                            <td>{{ $item->payment_code }}</td>
                             <td>{{ $item->id }}</td>
                             <td>{{ $item->first_name }} {{ $item->last_name }}</td>
                             <td>{{ $item->email }}</td>

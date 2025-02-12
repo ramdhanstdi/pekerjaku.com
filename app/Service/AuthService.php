@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Repository\AuthRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class AuthService {
@@ -127,6 +128,19 @@ class AuthService {
       $path = $this->request->file('ijazah')->storeAs('ijazahs', $name, 'public');
     }
     $params['ijazah'] = $path ?? '';
+
+    $year = date('Y');
+    $lastPayment = DB::table('users')->latest('id')->first();
+
+    if ($lastPayment && isset($lastPayment->payment_code)) {
+        $lastId = (int) substr($lastPayment->payment_code, -6); // Extract last 6 digits
+        $newId = str_pad($lastId + 1, 6, '0', STR_PAD_LEFT); // Increment and pad with zeros
+    } else {
+        $newId = '000001'; // Start from 000001 if no previous record exists
+    }
+
+    $paymentCode = $year . $newId;
+    $params['payment_code'] = $paymentCode;
 
     $this->authRepository->registrasi($params);
 

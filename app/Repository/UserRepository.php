@@ -42,7 +42,8 @@ class UserRepository {
         'selfiktp' => $params['selfiktp'],
         'skck' => $params['skck'],
         'ijazah' => $params['ijazah'],
-        'level_user' => $params['level_user']
+        'level_user' => $params['level_user'],
+        'payment_code' => $params['payment_code']
       ]);
     } else{
       $user = $this->model->create($params);
