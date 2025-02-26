@@ -74,6 +74,26 @@
                             </ul>
                         </div>
                         <div class="sidebar__item">
+                            <h4>Filter by City</h4>
+                            <ul>
+                                <li><a href="{{ url()->current() }}">All Cities</a></li>
+                                @foreach ($cities as $province => $cityList)
+                                    <li>
+                                        <a href="#collapse-{{ Str::slug($province) }}" data-toggle="collapse">
+                                            <strong>{{ $province }}</strong> <i class="fa fa-chevron-down"></i>
+                                        </a>
+                                        <ul class="collapse" id="collapse-{{ Str::slug($province) }}">
+                                            @foreach ($cityList as $city)
+                                                <li><a href="{{ url()->current() }}?city={{ urlencode($city) }}">
+                                                    {{ $city }}
+                                                </a></li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>                        
+                        <div class="sidebar__item">
                             <div class="latest-product__text">
                                 <h4>Pekerja Baru</h4>
                                 <div class="latest-product__slider owl-carousel">
@@ -91,7 +111,7 @@
                                         </div>
                                     @endforeach
                                 </div>
-                            </div>
+                            </div>   
                         </div>
                     </div>
                 </div>
